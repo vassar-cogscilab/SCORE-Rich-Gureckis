@@ -5,6 +5,7 @@
         <script src="jspsych-6.3.1/jspsych.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js"></script>
         <link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
     </head>
     <body></body>
@@ -28,9 +29,30 @@
                 <p> Amet Lorem ex pariatur nulla magna non amet mollit laboris id commodo laboris irure veniam. </p>
              `,
             choices: ['Continue']
-        } 
-
+        }
         timeline.push(instructions)
+
+        var post_instructions_quiz = {
+          type: 'survey-multi-choice',
+          questions: [
+            {
+              prompt: 'This is the text of the first question.',
+              options: ['firstQ_option1', 'firstQ_option2', 'firstQ_option3'],
+              required: true
+            },
+            {
+              prompt: 'This is the text of the second question.',
+              options: ['secondQ_option1', 'secondQ_option2', 'secondQ_option3'],
+              required: true
+            },
+            {
+              prompt: 'This is the text of the third question.',
+              options: ['thirdQ_option1', 'thirdQ_option2', 'thirdQ_option3'],
+              required: true
+            }
+          ]
+        }
+        timeline.push(post_instructions_quiz)
         
 
         jsPsych.init({
