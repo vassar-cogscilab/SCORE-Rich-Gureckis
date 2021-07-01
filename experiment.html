@@ -3,7 +3,24 @@
     <head>
         <title>Rich-Gureckis_Generalizability_newtitle</title>
         <script src="jspsych-6.3.1/jspsych.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
+        <link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
     </head>
     <body></body>
-</html>
+    <script>
 
+var timeline = [];
+
+var welcome_screen = {
+    type: 'html-keyboard-response',
+    stimulus: 'Welcome!'
+}
+
+timeline.push(welcome_screen)
+
+    jsPsych.init({
+        timeline: timeline,
+    });
+
+    </script>
+</html>
