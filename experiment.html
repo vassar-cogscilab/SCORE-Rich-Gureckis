@@ -30,33 +30,45 @@
              `,
             choices: ['Continue']
         }
-        timeline.push(instructions)
 
-        var post_instructions_quiz = {
-          type: 'survey-multi-choice',
-          questions: [
+        var instuctions_quiz_questions = [
             {
               prompt: 'This is the text of the first question.',
-              options: ['firstQ_option1', 'firstQ_option2', 'firstQ_option3'],
-              required: true
+              options: ['firstQ_option1_CORRECT', 'firstQ_option2', 'firstQ_option3'],
+              required: true,
+              correct_response: 'firstQ_option1_CORRECT'
             },
             {
               prompt: 'This is the text of the second question.',
-              options: ['secondQ_option1', 'secondQ_option2', 'secondQ_option3'],
-              required: true
+              options: ['secondQ_option1', 'secondQ_option2_CORRECT', 'secondQ_option3'],
+              required: true,
+              correct_response: 'secondQ_option2_CORRECT'
             },
             {
               prompt: 'This is the text of the third question.',
-              options: ['thirdQ_option1', 'thirdQ_option2', 'thirdQ_option3'],
-              required: true
+              options: ['thirdQ_option1', 'thirdQ_option2', 'thirdQ_option3_CORRECT'],
+              required: true,
+              correct_response: 'thirdQ_option3_CORRECT'
             }
           ]
+
+        var post_instructions_quiz = {
+          type: 'survey-multi-choice',
+          questions: instuctions_quiz_questions
         }
-        timeline.push(post_instructions_quiz)
-        
+
+
+        var instructions_loop = {
+          timeline: [instructions, post_instructions_quiz],
+          repetitions: 3
+        }
+        timeline.push(instructions_loop)
 
         jsPsych.init({
             timeline: timeline,
+            on_finish: () => {
+              jsPsych.data.displayData();
+            }
         });
 
     </script>
