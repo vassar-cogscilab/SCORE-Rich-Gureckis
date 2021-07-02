@@ -1,8 +1,3 @@
 # SCORE-Rich-Gureckis
 
-Testing adding a line!!!!!!!
-
-Testing another line.
-
-My name is Rachel.
-My name is Miles.
+Testing the generalizability of Rich & Gureckis, "Exploration, Generalization, and the Development of Learning Traps" (

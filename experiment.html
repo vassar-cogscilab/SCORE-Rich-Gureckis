@@ -7,6 +7,8 @@
         <script src="jspsych-6.3.1/plugins/jspsych-html-button-response.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-select.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-fullscreen.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-image-button-response.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-preload.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js"></script>
@@ -18,7 +20,12 @@
     
         var timeline = [];
 
-        var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['conditionA', 'conditionB', 'conditionC'], 1)[0];
+        timeline.push({
+          type: 'fullscreen',
+          fullscreen_mode: true
+        });
+
+        var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['jj', 'conditionB', 'conditionC'], 1)[0];
 
         jsPsych.data.addProperties({
             condition: condition_assignment
@@ -50,7 +57,7 @@
         // WELCOME SCREEN
         var welcome_screen = {
             type: 'html-keyboard-response',
-            stimulus: 'Welcome!'
+            stimulus: 'Welcome! Press any key to begin.'
         }
 
         timeline.push(welcome_screen)
@@ -146,34 +153,34 @@
         // ACTUAL TRIAL
 
         var actual_trial = {
-            timeline: [
-                {
-                    type: 'image-button-response',
-                    stimulus: jsPsych.timelineVariable('bee'),
-                    choices: ['Harvest', 'Avoid'],
-                    prompt: "<p>Harvest or avoid?</p>",
-                    margin_horizontal: '16px'
-                },
-                // {
-                //     type: 'html-keyboard-response',
-                //     stimulus: '',
-                //     choices: jsPsych.NO_KEYS,
-                //     trial_duration: 250
-                // },
-             ],
-        
-            timeline_variables: [
-                { bee: 'bees-with-color/bees-01-color.svg'},
-                { bee: 'bees-with-color/bees-02-color.svg'},
-                { bee: 'bees-with-color/bees-03-color.svg'},
-                { bee: 'bees-with-color/bees-04-color.svg'},
-            ],
-            randomize_order: true
+          timeline: [
+            {
+                type: 'image-button-response',
+                stimulus: jsPsych.timelineVariable('bee'),
+                choices: ['Harvest', 'Avoid'],
+                prompt: "<p>Harvest or avoid?</p>",
+                margin_horizontal: '16px'
+            },
+            // {
+            //     type: 'html-keyboard-response',
+            //     stimulus: '',
+            //     choices: jsPsych.NO_KEYS,
+            //     trial_duration: 250
+            // },
+          ],
+      
+          timeline_variables: [
+            { bee: 'bees-with-color/bees-01-color.svg'},
+            { bee: 'bees-with-color/bees-02-color.svg'},
+            { bee: 'bees-with-color/bees-03-color.svg'},
+            { bee: 'bees-with-color/bees-04-color.svg'},
+          ],
+          randomize_order: true
         }
 
         var node = {
-            timeline: [actual_trial],
-            repetitions: 2
+          timeline: [actual_trial],
+          repetitions: 2
         }
 
         timeline.push(node);
@@ -181,59 +188,73 @@
         
 
         // POST QUESTIONNAIRE
-        var scale_1 = ["no","yes"];
+        var payout_feedback = {
+          type: 'html-button-response',
+          stimulus: () => {
+            var payout = 4;
+            return 'You made $'+payout+'.'},
+          choices: ['Continue.'],
+          margin_vertical: '16px'
+        }
 
         var post_q1 = {
-            type: 'survey-text',
-            questions: [
-                {
-                    prompt: 'About what percentage of beehives do you think contained dangerous bees?',
-                    name: 'percent-dangerous-bees',
-                    placeholder: '(enter a value between 0 and 100)',
-                    required: true,
-                }
-            ],
+          type: 'survey-text',
+          questions: [
+              {
+                  prompt: 'About what percentage of beehives do you think contained dangerous bees?',
+                  name: 'percent-dangerous-bees',
+                  placeholder: '(enter a value between 0 and 100)',
+                  required: true,
+              }
+          ],
         };
 
         var post_q2 = {
-            type: 'survey-multi-select',
-            questions: [
-                {
-                    prompt: `<p>Which features do you think were useful for deciding whether a bee variety was friendly or dangerous?</p>`,
-                    options: ["Wings", "Antennae", "Stripes", "Legs"], 
-                    name: 'feature-perception',
-                    required: true,
-                },
-            ],        
-            randomize_question_order: true        
+          type: 'survey-multi-select',
+          questions: [
+              {
+                  prompt: `<p>Which features do you think were useful for deciding whether a bee variety was friendly or dangerous?</p>`,
+                  options: ["Wings", "Antennae", "Stripes", "Legs"], 
+                  name: 'feature-perception',
+                  required: true,
+              },
+          ],        
+          randomize_question_order: true        
         };
 
         var post_q3 = {
-            type: 'survey-text',
-            questions: [
-                 {
-                    prompt: 'Did you use pen and paper?',
-                    name: 'pen-and-paper',
-                    placeholder: '(Please be honest.)',
-                    required: true,
-                }, 
-            ], 
+          type: 'survey-multi-choice',
+          questions: [
+                {
+                  prompt: 'Did you use pen and paper?',
+                  options: ["Yes","No"],
+                  name: 'pen-and-paper',
+                  required: true,
+              }, 
+          ], 
         };
 
         var post_questionnaire = {
-            timeline: [post_q1, post_q2, post_q3]
+          timeline: [payout_feedback, post_q1, post_q2, post_q3]
         }
 
         timeline.push(post_questionnaire);
 
-        
+        // exit fullscreen mode
+        timeline.push({
+          type: 'fullscreen',
+          fullscreen_mode: false
+        });
       
         jsPsych.init({
-            timeline: timeline,
-            default_iti: 250, 
-            on_finish: function() {
-                jsPsych.data.displayData();
-            }
+          timeline: timeline,
+          default_iti: 150, 
+          exclusions: {
+            min_width: 800,
+            min_height: 600},
+          on_finish: function() {
+              jsPsych.data.displayData();
+          }
         });
         
     </script>
