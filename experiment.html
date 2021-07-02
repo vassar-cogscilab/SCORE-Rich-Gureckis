@@ -6,6 +6,7 @@
         <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-html-button-response.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-instructions.js"></script>
         <link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
     </head>
     <body></body>
@@ -23,15 +24,17 @@
 
         // INSTRUCTIONS
         var instructions = {
-            type: 'html-button-response',
-            stimulus: `
-                <p> Sample instructions. </p>,
-                <p> Amet Lorem ex pariatur nulla magna non amet mollit laboris id commodo laboris irure veniam. </p>
-             `,
-            choices: ['Continue']
-        }
-
-        var instuctions_quiz_questions = [
+          type: 'instructions',
+            pages: [
+                'Here are some instructions. They tell you what to do!',
+                'Oh look, another page of instructions! <br>'+
+                'This must be a complicated experiment.',
+                'Wow, I hope this is the final page of instructions.'
+            ],
+            show_clickable_nav: true
+        } 
+      
+        var instructions_quiz_questions = [
             {
               prompt: 'This is the text of the first question.',
               options: ['firstQ_option1_CORRECT', 'firstQ_option2', 'firstQ_option3'],
@@ -57,16 +60,16 @@
 
         var post_instructions_quiz = {
           type: 'survey-multi-choice',
-          questions: instuctions_quiz_questions,
+          questions: instructions_quiz_questions,
           on_finish: (data) => {
-            var Q1_correct = jsPsych.pluginAPI.compareKeys(data.response.Q1, instuctions_quiz_questions[0].correct_response);
-            var Q2_correct = jsPsych.pluginAPI.compareKeys(data.response.Q2, instuctions_quiz_questions[1].correct_response);
-            var Q3_correct = jsPsych.pluginAPI.compareKeys(data.response.Q3, instuctions_quiz_questions[2].correct_response);
+            var Q1_correct = jsPsych.pluginAPI.compareKeys(data.response.Q1, instructions_quiz_questions[0].correct_response);
+            var Q2_correct = jsPsych.pluginAPI.compareKeys(data.response.Q2, instructions_quiz_questions[1].correct_response);
+            var Q3_correct = jsPsych.pluginAPI.compareKeys(data.response.Q3, instructions_quiz_questions[2].correct_response);
             data.correct = Q1_correct && Q2_correct && Q3_correct;
           }
         }
 
-        var instuctions_quiz_feedback = {
+        var instructions_quiz_feedback = {
           type: 'html-button-response',
           stimulus: () => {
             all_correct = jsPsych.data.get().last(1).values()[0].correct;
@@ -102,10 +105,11 @@
         }
 
         var instructions_sequence = {
-          timeline: [instructions, post_instructions_quiz, instuctions_quiz_feedback, instruction_repeat]
+          timeline: [instructions, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
         }
         timeline.push(instructions_sequence)
-
+        
+      
         jsPsych.init({
             timeline: timeline,
             on_finish: () => {
