@@ -16,11 +16,13 @@
     
         var timeline = [];
 
-        // var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['conditionA', 'conditionB', 'conditionC'], 1)[0];
+        var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['conditionA', 'conditionB', 'conditionC'], 1)[0];
 
         jsPsych.data.addProperties({
             condition: condition_assignment
         });
+
+        console.log(condition_assignment);
 
         var images = [
                         'bees-with-color/bees-01-color.svg',
@@ -149,6 +151,7 @@
 
         jsPsych.init({
             timeline: timeline,
+            default_iti: 250, 
             on_finish: function() {
                 jsPsych.data.displayData();
             }
