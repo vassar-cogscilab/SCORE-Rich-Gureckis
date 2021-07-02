@@ -5,6 +5,10 @@
         <script src="jspsych-6.3.1/jspsych.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-select.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-image-button-response.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-preload.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-instructions.js"></script>
         <link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
@@ -13,6 +17,35 @@
     <script>
     
         var timeline = [];
+
+        var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['conditionA', 'conditionB', 'conditionC'], 1)[0];
+
+        jsPsych.data.addProperties({
+            condition: condition_assignment
+        });
+
+        console.log(condition_assignment);
+
+        var images = [
+                        'bees-with-color/bees-01-color.svg',
+                        'bees-with-color/bees-02-color.svg',
+                        'bees-with-color/bees-03-color.svg',
+                        'bees-with-color/bees-04-color.svg',
+                        'bees-with-color/bees-05-color.svg',
+                        'bees-with-color/bees-06-color.svg',
+                        'bees-with-color/bees-07-color.svg',
+                        'bees-with-color/bees-08-color.svg',
+                    ];
+
+        var preload = {
+            type: 'preload',
+            images: images,
+            max_load_time: 30000,
+            message: 'Please wait while the experiment loads',
+            error_message: 'The experiment failed to load. Please contact the researcher.'
+        };
+
+        timeline.push(preload);
 
         // WELCOME SCREEN
         var welcome_screen = {
@@ -57,6 +90,89 @@
               name: 'Q3'
             }
         ]
+    
+        // ACTUAL TRIAL
+
+        var actual_trial = {
+            timeline: [
+                {
+                    type: 'image-button-response',
+                    stimulus: jsPsych.timelineVariable('bee'),
+                    choices: ['Harvest', 'Avoid'],
+                    prompt: "<p>Harvest or avoid?</p>",
+                    margin_horizontal: '16px'
+                },
+                // {
+                //     type: 'html-keyboard-response',
+                //     stimulus: '',
+                //     choices: jsPsych.NO_KEYS,
+                //     trial_duration: 250
+                // },
+             ],
+        
+            timeline_variables: [
+                { bee: 'bees-with-color/bees-01-color.svg'},
+                { bee: 'bees-with-color/bees-02-color.svg'},
+                { bee: 'bees-with-color/bees-03-color.svg'},
+                { bee: 'bees-with-color/bees-04-color.svg'},
+            ],
+            randomize_order: true
+        }
+
+        var node = {
+            timeline: [actual_trial],
+            repetitions: 2
+        }
+
+        timeline.push(node);
+
+        
+
+        // POST QUESTIONNAIRE
+        var scale_1 = ["no","yes"];
+
+        var post_q1 = {
+            type: 'survey-text',
+            questions: [
+                {
+                    prompt: 'About what percentage of beehives do you think contained dangerous bees?',
+                    name: 'percent-dangerous-bees',
+                    placeholder: '(enter a value between 0 and 100)',
+                    required: true,
+                }
+            ],
+        };
+
+        var post_q2 = {
+            type: 'survey-multi-select',
+            questions: [
+                {
+                    prompt: `<p>Which features do you think were useful for deciding whether a bee variety was friendly or dangerous?</p>`,
+                    options: ["Wings", "Antennae", "Stripes", "Legs"], 
+                    name: 'feature-perception',
+                    required: true,
+                },
+            ],        
+            randomize_question_order: true        
+        };
+
+        var post_q3 = {
+            type: 'survey-text',
+            questions: [
+                 {
+                    prompt: 'Did you use pen and paper?',
+                    name: 'pen-and-paper',
+                    placeholder: '(Please be honest.)',
+                    required: true,
+                }, 
+            ], 
+        };
+
+        var post_questionnaire = {
+            timeline: [post_q1, post_q2, post_q3]
+        }
+
+        timeline.push(post_questionnaire);
 
         var post_instructions_quiz = {
           type: 'survey-multi-choice',
@@ -112,10 +228,11 @@
       
         jsPsych.init({
             timeline: timeline,
-            on_finish: () => {
-              jsPsych.data.displayData();
+            default_iti: 250, 
+            on_finish: function() {
+                jsPsych.data.displayData();
             }
         });
-
+        
     </script>
 </html>
