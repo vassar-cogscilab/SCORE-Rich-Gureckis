@@ -5,6 +5,7 @@
         <script src="jspsych-6.3.1/jspsych.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-instructions.js"></script>
         <link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
     </head>
     <body></body>
@@ -22,16 +23,21 @@
 
         // INSTRUCTIONS
         var instructions = {
-            type: 'html-button-response',
-            stimulus: `
-                <p> Sample instructions. </p>,
-                <p> Amet Lorem ex pariatur nulla magna non amet mollit laboris id commodo laboris irure veniam. </p>
-             `,
-            choices: ['Continue']
+            type: 'instructions',
+            pages: [
+                'Here are some instructions. They tell you what to do!',
+                'Oh look, another page of instructions! <br>'+
+                'This must be a complicated experiment.',
+                'Wow, I hope this is the final page of instructions.'
+            ],
+            show_clickable_nav: true
         } 
 
         timeline.push(instructions)
         
+        // POST-INSTRUCTION QUIZ
+
+
 
         jsPsych.init({
             timeline: timeline,
