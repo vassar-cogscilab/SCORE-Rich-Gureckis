@@ -83,4 +83,3 @@ var instruction_repeat = {
 var instructions_sequence = {
   timeline: [instructions, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
 }
-timeline.push(instructions_sequence)

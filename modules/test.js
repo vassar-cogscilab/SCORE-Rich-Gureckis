@@ -26,9 +26,7 @@ var actual_trial = {
   randomize_order: true
 }
 
-var node = {
+var test = {
   timeline: [actual_trial],
   repetitions: 2
 }
-
-timeline.push(node);

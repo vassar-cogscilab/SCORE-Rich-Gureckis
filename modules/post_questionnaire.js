@@ -48,5 +48,3 @@ var post_q3 = {
 var post_questionnaire = {
   timeline: [payout_feedback, post_q1, post_q2, post_q3]
 }
-
-timeline.push(post_questionnaire);
