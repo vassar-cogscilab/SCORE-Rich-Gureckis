@@ -24,6 +24,7 @@
         <script type="text/javascript" src="modules/post_questionnaire.js"></script>
 
         <script type="text/javascript" src="modules/group_assignment.js"></script>
+        <script type="text/javascript" src="materials/bees.js"></script>
     </head>
     <body></body>
     <script>
@@ -35,27 +36,15 @@
           fullscreen_mode: true
         });
 
-
-        var bees = [
-          {
-            image: 'bees-with-color/bee-A2SM.svg',
-            antennae: 'A',
-            wings: '2',
-            pattern: 'S',
-            legs: 'M'
-          }
-        ]
-
-        var images = [
-                        'bees-with-color/bee-A2SM.svg',
-                        'bees-with-color/bee-B2DM.svg',
-                        'bees-with-color/bee-A1SM.svg',
-                        'bees-with-color/bee-A1DM.svg'
-                    ];
-
         var preload = {
             type: 'preload',
-            images: images,
+            images: () => {
+              var img = [];
+              for (const i in BEES) {
+                img.push(BEES[i].image);
+              }
+              return img;
+            },
             max_load_time: 30000,
             message: 'Please wait while the experiment loads',
             error_message: 'The experiment failed to load. Please contact the researcher.'
