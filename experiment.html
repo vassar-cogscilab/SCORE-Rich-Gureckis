@@ -22,6 +22,8 @@
         <script type="text/javascript" src="modules/instructions.js"></script>
         <script type="text/javascript" src="modules/test.js"></script>
         <script type="text/javascript" src="modules/post_questionnaire.js"></script>
+
+        <script type="text/javascript" src="modules/group_assignment.js"></script>
     </head>
     <body></body>
     <script>
@@ -33,13 +35,16 @@
           fullscreen_mode: true
         });
 
-        var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['jj', 'conditionB', 'conditionC'], 1)[0];
 
-        jsPsych.data.addProperties({
-            condition: condition_assignment
-        });
-
-        console.log(condition_assignment);
+        var bees = [
+          {
+            image: 'bees-with-color/bee-A2SM.svg',
+            antennae: 'A',
+            wings: '2',
+            pattern: 'S',
+            legs: 'M'
+          }
+        ]
 
         var images = [
                         'bees-with-color/bee-A2SM.svg',
