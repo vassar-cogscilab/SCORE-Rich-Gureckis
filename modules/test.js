@@ -18,10 +18,10 @@ var actual_trial = {
   ],
 
   timeline_variables: [
-    { bee: 'bees-with-color/bees-01-color.svg'},
-    { bee: 'bees-with-color/bees-02-color.svg'},
-    { bee: 'bees-with-color/bees-03-color.svg'},
-    { bee: 'bees-with-color/bees-04-color.svg'},
+    { bee: 'bees-with-color/bee-A2SM.svg'},
+    { bee: 'bees-with-color/bee-B2DM.svg'},
+    { bee: 'bees-with-color/bee-A1SM.svg'},
+    { bee: 'bees-with-color/bee-A1DM.svg'},
   ],
   randomize_order: true
 }
