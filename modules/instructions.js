@@ -1,3 +1,5 @@
+var instructions_quiz_attempt_count = 0;
+
 // INSTRUCTIONS
 var instructions = {
   type: 'instructions',
@@ -37,6 +39,9 @@ var instructions_quiz_questions = [
 var post_instructions_quiz = {
   type: 'survey-multi-choice',
   questions: instructions_quiz_questions,
+  on_start: () => {
+    instructions_quiz_attempt_count++;
+  },
   on_finish: (data) => {
     var Q1_correct = jsPsych.pluginAPI.compareKeys(data.response.Q1, instructions_quiz_questions[0].correct_response);
     var Q2_correct = jsPsych.pluginAPI.compareKeys(data.response.Q2, instructions_quiz_questions[1].correct_response);
@@ -50,29 +55,27 @@ var instructions_quiz_feedback = {
   stimulus: () => {
     all_correct = jsPsych.data.get().last(1).values()[0].correct;
     if(all_correct) {
-      return `<p>Congrats, you got everything right</p>`
+      return `<p>Congrats, you got everything right<br>When you're ready, click the button below to continue to the experiment.</p>`
+    } else if (instructions_quiz_attempt_count < 2) {
+      return `<p>At least one answer was incorrect.<br>You will be redirected to review the instructions again.</p>`
     } else {
-      return `<p>At least one answer was incorrect. Please review instructions before continuing.</p>`
+      return `<p>At least one answer is incorrect. Your participation is no longer requested in this experiment.</p>`
     }
   },
-  choices: ['Continue']
+  choices: ['Continue'],
+  on_finish: () => {
+    if (instructions_quiz_attempt_count >= 2 && !jsPsych.data.get().last(1).values()[0].correct){
+      document.exitFullscreen();
+      jsPsych.endExperiment();
+    }
+  }
 }
 
 var instruction_repeat = {
   timeline: [
     instructions,
     post_instructions_quiz,
-    {
-      type: `html-keyboard-response`,
-      stimulus: () => {
-        all_correct = jsPsych.data.get().last(1).values()[0].correct;
-        if(all_correct) {
-          return `<p>Congrats, you got everything right!<br>Press any key to continue to the experiment.</p>`
-        }  else {
-          return `<p>At least one answer is incorrect. Your participation is no longer requested in this experiment.</p>`
-        }
-      }
-    }
+    instructions_quiz_feedback
   ],
   conditional_function: () => {
     all_correct = jsPsych.data.get().last(2).values()[0].correct;
