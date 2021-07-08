@@ -1,31 +1,157 @@
 // ACTUAL TRIAL
 
-var actual_trial = {
-  timeline: [
-    {
-        type: 'image-button-response',
-        stimulus: jsPsych.timelineVariable('bee'),
-        choices: ['Harvest', 'Avoid'],
-        prompt: "<p>Harvest or avoid?</p>",
-        margin_horizontal: '16px'
-    },
-    // {
-    //     type: 'html-keyboard-response',
-    //     stimulus: '',
-    //     choices: jsPsych.NO_KEYS,
-    //     trial_duration: 250
-    // },
-  ],
 
-  timeline_variables: [
-    { bee: 'bees-with-color/bee-A2SM.svg'},
-    { bee: 'bees-with-color/bee-B2DM.svg'},
-    { bee: 'bees-with-color/bee-A1SM.svg'},
-    { bee: 'bees-with-color/bee-A1DM.svg'},
-  ],
-  randomize_order: true
+var BEES = [
+  {
+    image: 'bees-with-color/bee-A1DF.svg',
+    antennae: 'A',
+    wings: '1',
+    pattern: 'D',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-A1DM.svg',
+    antennae: 'A',
+    wings: '1',
+    pattern: 'D',
+    legs: 'M'
+  },
+  {
+    image: 'bees-with-color/bee-A1SF.svg',
+    antennae: 'A',
+    wings: '1',
+    pattern: 'S',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-A1SM.svg',
+    antennae: 'A',
+    wings: '1',
+    pattern: 'S',
+    legs: 'M'
+  },
+  {
+    image: 'bees-with-color/bee-A2DF.svg',
+    antennae: 'A',
+    wings: '2',
+    pattern: 'D',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-A2DM.svg',
+    antennae: 'A',
+    wings: '2',
+    pattern: 'D',
+    legs: 'M'
+  },
+  {
+    image: 'bees-with-color/bee-A2SF.svg',
+    antennae: 'A',
+    wings: '2',
+    pattern: 'S',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-A2SM.svg',
+    antennae: 'A',
+    wings: '2',
+    pattern: 'S',
+    legs: 'M'
+  },
+  {
+    image: 'bees-with-color/bee-B1DF.svg',
+    antennae: 'B',
+    wings: '1',
+    pattern: 'D',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-B1DM.svg',
+    antennae: 'B',
+    wings: '1',
+    pattern: 'D',
+    legs: 'M'
+  },
+  {
+    image: 'bees-with-color/bee-B1SF.svg',
+    antennae: 'B',
+    wings: '1',
+    pattern: 'S',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-B1SM.svg',
+    antennae: 'B',
+    wings: '1',
+    pattern: 'S',
+    legs: 'M'
+  },
+  {
+    image: 'bees-with-color/bee-B2DF.svg',
+    antennae: 'B',
+    wings: '2',
+    pattern: 'D',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-B2DM.svg',
+    antennae: 'B',
+    wings: '2',
+    pattern: 'D',
+    legs: 'M'
+  },
+  {
+    image: 'bees-with-color/bee-B2SF.svg',
+    antennae: 'B',
+    wings: '2',
+    pattern: 'S',
+    legs: 'F'
+  },
+  {
+    image: 'bees-with-color/bee-B2SM.svg',
+    antennae: 'B',
+    wings: '2',
+    pattern: 'S',
+    legs: 'M'
+  }
+]
+
+var shuffled_bees = jsPsych.randomization.repeat(BEES, 1);
+
+console.log(shuffled_bees);
+
+var bad_bees = shuffled_bees.filter(bee => bee.antennae == 'A' && bee.legs == 'M');
+var good_bees = shuffled_bees.filter(bee => !(bee.antennae == 'A' && bee.legs == 'M'));
+
+console.log(bad_bees);
+console.log(good_bees);
+
+var first_eight = [].concat(bad_bees.splice(0,1),(good_bees.splice(0,2)));
+var second_eight = [].concat(bad_bees, good_bees);
+
+console.log(first_eight);
+console.log(second_eight);
+console.log(bad_bees);
+console.log(good_bees);
+
+var first_eight_randomized = jsPsych.randomization.repeat(first_eight,1);
+var second_eight_randomized = jsPsych.randomization.repeat(second_eight,1);
+
+var full_list = [].concat(first_eight_randomized, second_eight_randomized);
+
+console.log(full_list);
+
+function bee_chooser() { 
+  full_list.splice(0);  
 }
 
+
+// var node = {
+//   timeline: [actual_trial],
+//   repetitions: 2
+// }
+
+// timeline.push(node);
 var test = {
   timeline: [actual_trial],
   repetitions: 2
