@@ -1,6 +1,5 @@
 // ACTUAL TRIAL
 
-
 var BEES = [
   {
     image: 'bees-with-color/bee-A1DF.svg',
@@ -116,6 +115,18 @@ var BEES = [
   }
 ]
 
+// function bee_img_name_extractor(array) {
+//   const bee_img_names = [];
+//   array.forEach(element => {
+//     const {image, antennae, wings, pattern, legs} = element;
+//     console.log(image)
+//   };
+//   return bee_img_names;
+// };
+
+// bee_img_name_extractor(BEES);
+
+
 var rel_dim_1 = 'B'
 var rel_dim_2 = 'F'
 
@@ -132,3 +143,30 @@ function bee_chooser(rel_dim_1,rel_dim_2) {
 }
 
 console.log(bee_chooser(rel_dim_1,rel_dim_2));
+
+
+
+// var test = {
+//   timeline: [
+//       {
+//           type: 'image-button-response',
+//           stimulus: jsPsych.timelineVariable(bee_chooser),
+//           choices: ['Harvest', 'Avoid'],
+//           prompt: "<p>Harvest or avoid?</p>",
+//           margin_horizontal: '16px'
+//       },
+//    ],
+//   timeline_variables: [
+//       bee_chooser(rel_dim_1,rel_dim_2)
+//   ],
+//   randomize_order: true,
+//   on_timeline_start: function() {
+//     bee_chooser(rel_dim_1,rel_dim_2)
+//   },
+// }
+
+// var node = {
+//   timeline: [actual_trial],
+//   repetitions: 2
+// }
+
