@@ -32,8 +32,11 @@ var assign_bee_group = (dimensions_arr) => {
   return ret_obj;
 }
 
+var bee_info = assign_bee_group(relevant_dimension_assignment);
+
 jsPsych.data.addProperties({
     condition: condition_assignment,                           // contingent or full-information
     relevant_dimensions: relevant_dimension_assignment,        // array of length 2, containing 2 of ['antennae', 'wings', 'pattern', 'legs']
-    bee_group: assign_bee_group(relevant_dimension_assignment) // an object as specified above
+    bee_group: bee_info                                        // an object as specified above
 });
+

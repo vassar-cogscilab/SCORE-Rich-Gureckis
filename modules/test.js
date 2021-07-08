@@ -1,17 +1,6 @@
 // ACTUAL TRIAL
 
-// function bee_img_name_extractor(array) {
-//   const bee_img_names = [];
-//   array.forEach(element => {
-//     const {image, antennae, wings, pattern, legs} = element;
-//     console.log(image)
-//   };
-//   return bee_img_names;
-// };
-
-// bee_img_name_extractor(BEES);
-
-
+// generic test data
 var rel_dim_1 = 'B'
 var rel_dim_2 = 'F'
 var sample_obj = {
@@ -88,7 +77,7 @@ var actual_trial = {
           margin_horizontal: '16px'
       }
    ],
-  timeline_variables: bee_32set_builder(sample_obj),
+  timeline_variables: bee_32set_builder(bee_info),
   randomize_order: false
 }
 
