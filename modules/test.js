@@ -57,6 +57,7 @@ function bee_16set_builder(bee_group_object) {
 
   var first_eight = [].concat(bad_bees.splice(0,2),(good_bees.splice(0,6)));
   var second_eight = [].concat(bad_bees.splice(0,2), good_bees.splice(0,6));
+  console.log(first_eight);
   var first_eight_randomized = jsPsych.randomization.repeat(first_eight,1);
   var second_eight_randomized = jsPsych.randomization.repeat(second_eight,1);
   var full_list = [].concat(first_eight_randomized, second_eight_randomized);
