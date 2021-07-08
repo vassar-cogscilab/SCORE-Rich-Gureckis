@@ -129,11 +129,43 @@ var BEES = [
 
 var rel_dim_1 = 'B'
 var rel_dim_2 = 'F'
+var sample_obj = {
+  antennae: 'B',
+  wings: 'X',
+  pattern: 'X',
+  legs: 'F'
+}
 
-function bee_chooser(rel_dim_1,rel_dim_2) {
+/*
+  Takes as input a JS Object, with 'X' as a placeholder for irrelevant dimensions.
+  e.g.
+  {
+    antennae: 'B',
+    wings: 'X',
+    pattern: 'X',
+    legs: 'F'
+  }
+*/
+function bee_chooser(bee_group_object) {
+  // move relevant info into rel_info array, as an array of objects
+  var rel_info = [];
+  for (const [dim, val] of Object.entries(bee_group_object)) {
+    if (val != 'X') { // if relevant,
+      var new_obj = {};
+      new_obj['dimension'] = dim;
+      new_obj['value'] = val;
+      rel_info.push(new_obj);
+    }
+  }
+
+  // shuffle bees, filter good and bad, tag bees accordingly
   var shuffled_bees = jsPsych.randomization.repeat(BEES, 1); //
-  var bad_bees = shuffled_bees.filter(bee => bee.antennae == rel_dim_1 && bee.legs == rel_dim_2);
-  var good_bees = shuffled_bees.filter(bee => !(bee.antennae == rel_dim_1 && bee.legs == rel_dim_2));
+  var bad_bees = shuffled_bees.filter(bee => bee[rel_info[0].dimension] == rel_info[0].value && bee[rel_info[1].dimension] == rel_info[1].value);
+  var good_bees = shuffled_bees.filter(bee => !(bee[rel_info[0].dimension] == rel_info[0].value && bee[rel_info[1].dimension] == rel_info[1].value));
+
+  bad_bees.forEach(bee => bee['alignment'] = 'evil');
+  good_bees.forEach(bee => bee['alignment'] = 'good');
+
   var first_eight = [].concat(bad_bees.splice(0,2),(good_bees.splice(0,6)));
   var second_eight = [].concat(bad_bees.splice(0,2), good_bees.splice(0,6));
   var first_eight_randomized = jsPsych.randomization.repeat(first_eight,1);
@@ -146,27 +178,27 @@ console.log(bee_chooser(rel_dim_1,rel_dim_2));
 
 
 
-// var test = {
-//   timeline: [
-//       {
-//           type: 'image-button-response',
-//           stimulus: jsPsych.timelineVariable(bee_chooser),
-//           choices: ['Harvest', 'Avoid'],
-//           prompt: "<p>Harvest or avoid?</p>",
-//           margin_horizontal: '16px'
-//       },
-//    ],
-//   timeline_variables: [
-//       bee_chooser(rel_dim_1,rel_dim_2)
-//   ],
-//   randomize_order: true,
-//   on_timeline_start: function() {
-//     bee_chooser(rel_dim_1,rel_dim_2)
-//   },
-// }
+var actual_trial = {
+  timeline: [
+      {
+          type: 'image-button-response',
+          stimulus: jsPsych.timelineVariable(bee_chooser),
+          choices: ['Harvest', 'Avoid'],
+          prompt: "<p>Harvest or avoid?</p>",
+          margin_horizontal: '16px'
+      },
+   ],
+  timeline_variables: [
+      bee_chooser(rel_dim_1,rel_dim_2)
+  ],
+  randomize_order: true,
+  on_timeline_start: function() {
+    bee_chooser(rel_dim_1,rel_dim_2)
+  },
+}
 
-// var node = {
-//   timeline: [actual_trial],
-//   repetitions: 2
-// }
+var test = {
+  timeline: [actual_trial],
+  repetitions: 2
+}
 
