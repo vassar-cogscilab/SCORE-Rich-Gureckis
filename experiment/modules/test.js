@@ -38,19 +38,19 @@ function bee_16set_builder(bee_group_object) {
   }
 
   // shuffle bees, filter good and bad, tag bees accordingly
-  var shuffled_bees = jsPsych.randomization.repeat(BEES, 1); //
+  var shuffled_bees = jsPsych.randomization.repeat(BEES, 1);
   var bad_bees = shuffled_bees.filter(bee => bee[rel_info[0].dimension] == rel_info[0].value && bee[rel_info[1].dimension] == rel_info[1].value);
   var good_bees = shuffled_bees.filter(bee => !(bee[rel_info[0].dimension] == rel_info[0].value && bee[rel_info[1].dimension] == rel_info[1].value));
-  bad_bees.forEach(bee => bee['alignment'] = 'evil');
-  good_bees.forEach(bee => bee['alignment'] = 'good');
+  bad_bees.forEach(bee => bee['friendly'] = false);
+  good_bees.forEach(bee => bee['friendly'] = true);
 
   var first_eight = [].concat(bad_bees.splice(0,2),(good_bees.splice(0,6)));
   var second_eight = [].concat(bad_bees.splice(0,2), good_bees.splice(0,6));
-  console.log(first_eight);
+  // console.log(first_eight);
   var first_eight_randomized = jsPsych.randomization.repeat(first_eight,1);
   var second_eight_randomized = jsPsych.randomization.repeat(second_eight,1);
   var full_list = [].concat(first_eight_randomized, second_eight_randomized);
-  console.log(full_list);
+  // console.log(full_list);
   return full_list
 }
 
@@ -66,6 +66,47 @@ function bee_64set_builder(bee_group_object){
   return first_32.concat(second_32);
 }
 
+
+
+
+var practice_trial = {
+  timeline:[
+      {
+        type: 'image-button-response',
+        stimulus: jsPsych.timelineVariable('image'),
+        choices: ['Harvest', 'Avoid'],
+        prompt: "<p>Harvest or avoid?</p>",
+        margin_horizontal: '16px',
+        stimulus_width: 300,
+      },
+
+      {
+        type: 'html-button-response',
+        stimulus: function() {
+          var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
+          var friendliness = jsPsych.timelineVariable('friendly', true);
+          var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
+          var response = '';
+          var action = avoidance ? 'avoid' : 'harvest';
+          var summary = goodchoice ? 'good-'+action : 'bad-'+action;
+          jsPsych.data.get().addToLast({action: action});
+          jsPsych.data.get().addToLast({summary: summary});
+          if (avoidance) {
+            response += 'You avoided!<br>';
+            response += friendliness ? "Bad choice, the bee was friendly." : "Good choice.";
+          } else {
+            response += 'You harvested!<br>';
+            response += !friendliness ? "Bad choice, the bee was angry." : "Good choice.";
+          }
+          return `<img src="${jsPsych.timelineVariable('image', true)}" width="200">
+                  <p>This is the bee that you just saw.<br>${response}</p>
+          `},
+        choices: ['Continue']
+      }
+   ],
+  timeline_variables: bee_64set_builder(bee_info),
+  randomize_order: false
+}
 
 var actual_trial = {
   timeline: [

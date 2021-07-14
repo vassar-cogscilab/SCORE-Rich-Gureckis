@@ -54,7 +54,9 @@
         timeline.push(preload);
         timeline.push(welcome_screen);
         timeline.push(instructions_sequence);
-        timeline.push(test);
+        timeline.push(practice_trial);
+        timeline.push(mid_point_screen);
+        timeline.push(actual_trial);
         timeline.push(post_questionnaire);
 
         // exit fullscreen mode
@@ -65,7 +67,7 @@
 
         jsPsych.init({
           timeline: timeline,
-          default_iti: 150, 
+          // default_iti: 150, 
           // exclusions: {
           //   min_width: 800,
           //   min_height: 600},

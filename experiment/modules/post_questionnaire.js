@@ -35,7 +35,7 @@ var post_q1 = {
   type: 'survey-text',
   questions: [
       {
-          prompt: 'About what percentage of beehives do you think contained dangerous bees?',
+          prompt: 'About what percentage of beehives do you think contained dangerous bees?', // allows for letters -- check this out
           name: 'percent-dangerous-bees',
           placeholder: '(enter a value between 0 and 100)',
           required: true,

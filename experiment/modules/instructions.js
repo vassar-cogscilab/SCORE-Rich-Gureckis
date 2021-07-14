@@ -57,7 +57,7 @@ var instructions_quiz_feedback = {
     if(all_correct) {
       return `<p>Congrats, you got everything right<br>When you're ready, click the button below to continue to the experiment.</p>`
     } else if (instructions_quiz_attempt_count < 2) {
-      return `<p>At least one answer was incorrect.<br>You will be redirected to review the instructions again.</p>`
+      return `<p>You did not answer all comprehension questions correctly.<br>Press <b>continue</b> to review the instructions again.</p>`
     } else {
       return `<p>At least one answer is incorrect. Your participation is no longer requested in this experiment.</p>`
     }
