@@ -67,11 +67,23 @@ function bee_64set_builder(bee_group_object){
 }
 
 
+function conditional_instructions() {
+  var response = [];
+  if (condition_assignment  == 'contingent') {
+    response += `CONTIf you choose to avoid a hive, you won't gain or lose any money,<br>
+                and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
+  } else {
+    response += `FULLIf you choose to avoid a hive, you won't gain or lose any
+                money,<br>but you'll still find out whether the bees were friendly
+                or dangerous.`; // full-info assignment
+  }
+  return response;
+}
 
 var trialCount = 1;
 var trialTotal = 64;
 
-var practice_trial = {
+var full_info_practice_trial = {
   on_start: () => {
     var trialInfo = document.getElementById('trial-info');
     trialInfo.style.visibility = 'visible';
@@ -116,6 +128,64 @@ var practice_trial = {
         }
       }
    ],
+  conditional_function: function() {
+    if(condition_assignment == 'full-information'){
+    return true;
+    } else {
+      return false;
+    }
+  },
+  timeline_variables: bee_64set_builder(bee_info),
+  randomize_order: false
+}
+
+
+var contingent_practice_trial = {
+  on_start: () => {
+    var trialInfo = document.getElementById('trial-info');
+    trialInfo.style.visibility = 'visible';
+  },
+  timeline:[
+      {
+        type: 'image-button-response',
+        stimulus: jsPsych.timelineVariable('image'),
+        choices: ['Harvest', 'Avoid'],
+        prompt: "<p>Harvest or avoid?</p>",
+        margin_horizontal: '16px',
+        stimulus_width: 300,
+      },
+
+      {
+        type: 'html-button-response',
+        stimulus: function() {
+          var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
+          var friendliness = jsPsych.timelineVariable('friendly', true);
+          var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
+          var response = '';
+          var action = avoidance ? 'avoid' : 'harvest';
+          var summary = goodchoice ? 'good-'+action : 'bad-'+action;
+          jsPsych.data.get().addToLast({action: action});
+          jsPsych.data.get().addToLast({summary: summary});
+          if (avoidance) {
+            response += 'You avoided!<br>';
+            // response += friendliness ? "Bad choice, the bee was friendly." : "Good choice.";
+          } else {
+            response += 'You harvested!<br>';
+            // response += !friendliness ? "Bad choice, the bee was angry." : "Good choice.";
+          }
+          return `<img src="${jsPsych.timelineVariable('image', true)}" width="200">
+                  <p>This is the bee that you just saw.<br>${response}</p>
+          `},
+        choices: ['Continue']
+      }
+   ],
+   conditional_function: function() {
+    if(condition_assignment == 'contingent'){
+    return true;
+    } else {
+      return false;
+    }
+  },
   timeline_variables: bee_64set_builder(bee_info),
   randomize_order: false
 }
