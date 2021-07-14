@@ -70,6 +70,10 @@ function bee_64set_builder(bee_group_object){
 
 
 var practice_trial = {
+  on_start: () => {
+    var trialInfo = document.getElementById('trial-info');
+    trialInfo.style.visibility = 'visible';
+  },
   timeline:[
       {
         type: 'image-button-response',
