@@ -7,7 +7,7 @@ var welcome_screen = {
 
 var mid_point_screen = {
   type: 'html-keyboard-response',
-  stimulus: 'Surprise!!  More bees!',
+  stimulus: 'Surprise!!  More bees!<br><br>This time, no feedback...<br><br>Press any key to begin.'
   on_start: () => {
     var bonusTracker = document.getElementById('bonus-tracker');
     bonusTracker.style.display = 'none';
@@ -18,5 +18,5 @@ var mid_point_screen = {
   on_finish: () => {
     var trialInfo = document.getElementById('trial-info');
     trialInfo.style.visibility = 'visible';
-  },
+  }
 }

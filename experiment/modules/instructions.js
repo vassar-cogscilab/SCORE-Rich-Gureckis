@@ -1,15 +1,71 @@
 var instructions_quiz_attempt_count = 0;
 
+function conditional_instructions() {
+  var response = [];
+  if (condition_assignment  == 'contingent') {
+    response += `CONTIf you choose to avoid a hive, you won't gain or lose any money,<br>
+                and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
+  } else {
+    response += `FULLIf you choose to avoid a hive, you won't gain or lose any
+                money,<br>but you'll still find out whether the bees were friendly
+                or dangerous.`; // full-info assignment
+  }
+  return response;
+}
+
+
 // INSTRUCTIONS
 var instructions = {
   type: 'instructions',
     pages: [
-        '<h1>Here are some instructions. </h1>They tell you what to do!',
-        'Oh look, another page of instructions! <br>'+
-        'This must be a complicated experiment.',
-        'Wow, I hope this is the final page of instructions.'
+      `In this experiment, you will play a simple video game in which you take the role of a beekeeper collecting honey.`,
+
+      `Most of your beehives have friendly bees, which will allow you
+      to collect honey.  Unfortunately, some of your colonies
+      have been infiltrated by dangerous bees, which will sting
+      you if you approach them.<br><br>
+      Your job is to <strong>collect as much
+      honey as possible from friendly bees</strong>, while learning
+      to <strong>avoid dangerous bees</strong> so you aren't stung.`,
+
+      `You will collect honey from <strong>64</strong> beehives, which contain several
+      different bee varieties. At each hive, you will see one of the
+      bees that live there and then need to choose whether to harvest
+      honey from the hive or to avoid it.`,
+
+      ` If you choose to harvest the hive, you'll be able to collect
+      honey if the bee variety is friendly, but will be stung if the
+      bee variety is dangerous. <strong>Collecting honey adds $0.02 to
+      your bonus</strong> for the experiment, while <strong>being
+      stung subtracts $0.10</strong> because you need expensive
+      medicine to treat the sting.`,
+
+      conditional_instructions(),
+
+      `<strong>You begin with a bonus of $0.40</strong>.<br>There will be
+      no changes in which bee varieties are friendly and which are
+      dangerous over the course of the experiment.`,
+
+      `Each hive is home to a single variety of bees, and these varieties have
+      different features which can allow you to tell them apart and tell which will be dangerous.<br>
+      The bee varieties differ in four ways.`,
+
+
+      'They can have 2 or 6 legs. <img src="materials/instrlegs.png"></img>',
+
+      'They can have single or double wings. <img src="materials/instrwings.png"></img>',
+
+      'They can have stripes or dots on their bodies. <img src="materials/instrstripes.png"></img>',
+
+      'They can have antennae or no antennae.  <img src="materials/instrantennae.png"></img>',
+
+      `It's possible to learn to predict perfectly which bees are friendly and which are dangerous using these four features,
+      so that you can harvest from bees that will give you honey while avoiding bees that would sting you.`,
+
+      `Ready to go?`,
     ],
-    show_clickable_nav: true
+  show_clickable_nav: true,
+  // show_page_number: true
 }
 
 var instructions_quiz_questions = [
