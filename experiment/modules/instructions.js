@@ -14,24 +14,26 @@ var instructions = {
 
 var instructions_quiz_questions = [
     {
-      prompt: 'This is the text of the first question.',
-      options: ['firstQ_option1_CORRECT', 'firstQ_option2', 'firstQ_option3'],
+      prompt: 'Can a bee variety change from being friendly to dangerous or dangerous to friendly over time?',
+      options: ['No.CORRECT', 'Yes.'],
       required: true,
-      correct_response: 'firstQ_option1_CORRECT',
+      correct_response: 'No.CORRECT',
       name: 'Q1'
     },
     {
-      prompt: 'This is the text of the second question.',
-      options: ['secondQ_option1', 'secondQ_option2_CORRECT', 'secondQ_option3'],
+      prompt: 'How can you learn to tell whether a bee variety is dangerous?',
+      options: ['Based on the color of the bee.', 'Based on the four features of the bee.CORRECT', 'Based on the order in which you see the bees.'],
       required: true,
-      correct_response: 'secondQ_option2_CORRECT',
+      correct_response: 'Based on the four features of the bee.CORRECT',
       name: 'Q2'
     },
     {
-      prompt: 'This is the text of the third question.',
-      options: ['thirdQ_option1', 'thirdQ_option2', 'thirdQ_option3_CORRECT'],
+      prompt: 'What happens when you avoid a bee variety?',
+      options: ['You do not learn if it was friendly or dangerous, and do not alter your bonus.',
+                'You learn if it was friendly or dangerous, but do not alter your bonus.',
+                'You learn if it was friendly or dangerous and alter your bonus_CORRECTFORNOW'],
       required: true,
-      correct_response: 'thirdQ_option3_CORRECT',
+      correct_response: 'You learn if it was friendly or dangerous and alter your bonus_CORRECTFORNOW',
       name: 'Q3'
     }
 ]
