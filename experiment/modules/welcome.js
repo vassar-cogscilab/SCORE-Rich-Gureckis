@@ -7,5 +7,5 @@ var welcome_screen = {
 
 var mid_point_screen = {
     type: 'html-keyboard-response',
-    stimulus: 'Surprise!!  More bees!'
+    stimulus: 'Surprise!!  More bees!<br><br>This time, no feedback...<br><br>Press any key to begin.'
 }
