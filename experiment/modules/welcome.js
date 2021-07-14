@@ -18,5 +18,7 @@ var mid_point_screen = {
   on_finish: () => {
     var trialInfo = document.getElementById('trial-info');
     trialInfo.style.visibility = 'visible';
+    trialCount = 1;
+    trialTotal = 32;
   }
 }
