@@ -80,7 +80,12 @@ function conditional_instructions() {
   return response;
 }
 
+
 var full_info_practice_trial = {
+  on_start: () => {
+    var trialInfo = document.getElementById('trial-info');
+    trialInfo.style.visibility = 'visible';
+  },
   timeline:[
       {
         type: 'image-button-response',
@@ -128,6 +133,10 @@ var full_info_practice_trial = {
 
 
 var contingent_practice_trial = {
+  on_start: () => {
+    var trialInfo = document.getElementById('trial-info');
+    trialInfo.style.visibility = 'visible';
+  },
   timeline:[
       {
         type: 'image-button-response',

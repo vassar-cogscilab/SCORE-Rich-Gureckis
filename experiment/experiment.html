@@ -15,7 +15,8 @@
         <script src="jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js"></script>
         <script src="jspsych-6.3.1/plugins/jspsych-instructions.js"></script>
         <link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
-        <link rel="shortcut icon" type="image/png" href="bee-favicon.png"/>
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <link rel="shortcut icon" type="image/png" href="materials/bee-favicon.png"/>
 
         <script type="text/javascript" src="materials/bees.js"></script>
         <script type="text/javascript" src="modules/group_assignment.js"></script>
@@ -27,7 +28,19 @@
         <script type="text/javascript" src="modules/post_questionnaire.js"></script>
 
     </head>
-    <body></body>
+    <body>
+      <div id="header">
+        <div id="logo-wrapper">
+          <img src="materials/VC_logo.png" alt="Vassar Logo" id="vclogo">
+          <h3 id="logotext">Vassar College Cognitive Science</h3>
+        </div>
+        <div id="trial-info">
+          <p><span class="trial-info-title">Trial: </span> <span id="trial-number">4/64</span></p>
+          <p id="bonus-tracker"><span class="trial-info-title">Current Bonus: </span><span id="bonus-value">$1.30</span></p>
+        </div>
+      </div>
+      <div id="jspsych-target"></div>
+    </body>
     <script>
     
         var timeline = [];
@@ -68,6 +81,7 @@
 
         jsPsych.init({
           timeline: timeline,
+          display_element: 'jspsych-target',
           // default_iti: 150, 
           // exclusions: {
           //   min_width: 800,

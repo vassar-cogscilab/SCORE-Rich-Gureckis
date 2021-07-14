@@ -69,5 +69,9 @@ var post_q3 = {
 };
 
 var post_questionnaire = {
+  on_start: () => {
+    var trialInfo = document.getElementById('trial-info');
+    trialInfo.style.display = 'none';
+  },
   timeline: [payout_feedback, post_q1, post_q2, post_q3]
 }
