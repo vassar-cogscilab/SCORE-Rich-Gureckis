@@ -96,7 +96,7 @@ var instructions_quiz_questions = [
 
 
 function conditional_quiz() {
-  var question3 = [];
+  var question3 = '';
   if (condition_assignment  == 'contingent') {
     question3 += 'CONT_You do not learn if it was friendly or dangerous, and do not alter your bonus.'; // contingent assignment
   } else {
@@ -133,7 +133,7 @@ var instructions_quiz_feedback = {
   },
   choices: ['Continue'],
   on_finish: () => {
-    if (instructions_quiz_attempt_count >= 2 && !jsPsych.data.get().last(1).values()[0].correct){
+    if (instructions_quiz_attempt_count >= 2 && !jsPsych.data.get().last(2).values()[0].correct){
       document.exitFullscreen();
       jsPsych.endExperiment();
     }
