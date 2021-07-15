@@ -1,15 +1,5 @@
 // ACTUAL TRIAL
 
-// generic test data
-var rel_dim_1 = 'B'
-var rel_dim_2 = 'F'
-var sample_obj = {
-  antennae: 'B',
-  wings: 'X',
-  pattern: 'X',
-  legs: 'F'
-}
-
 /*
   Takes as input a JS Object, with 'X' as a placeholder for irrelevant dimensions.
   e.g.
@@ -101,7 +91,7 @@ function conditional_instructions() {
 var trialCount = 1;
 var trialTotal = 64;
 
-var full_info_practice_trial = {
+var practice_trial = {
   on_start: () => {
     var trialInfo = document.getElementById('trial-info');
     trialInfo.style.visibility = 'visible';
@@ -117,6 +107,7 @@ var full_info_practice_trial = {
         prompt: "<p>Harvest or avoid?</p>",
         margin_horizontal: '16px',
         stimulus_width: 300,
+        render_on_canvas: false
       },
 
       {
@@ -137,10 +128,14 @@ var full_info_practice_trial = {
           jsPsych.data.get().addToLast({summary: summary});
           if (avoidance) {
             response += 'You avoided!<br>';
-            response += friendliness ? "Bad choice, the bee was friendly." : "Good choice.";
+            if(condition_assignment == 'full-information'){
+              response += friendliness ? "Bad choice, the bee was friendly." : "Good choice.";
+            }
           } else {
             response += 'You harvested!<br>';
-            response += !friendliness ? "Bad choice, the bee was angry." : "Good choice.";
+            if(condition_assignment == 'full-information'){
+              response += !friendliness ? "Bad choice, the bee was angry." : "Good choice.";
+            }
           }
           return `<img src="${jsPsych.timelineVariable('image', true)}" width="200">
                   <p>This is the bee that you just saw.<br>${response}</p>
@@ -151,75 +146,6 @@ var full_info_practice_trial = {
         }
       }
    ],
-  conditional_function: function() {
-    if(condition_assignment == 'full-information'){
-    return true;
-    } else {
-      return false;
-    }
-  },
-  timeline_variables: bee_64set_builder(bee_info),
-  randomize_order: false
-}
-
-
-var contingent_practice_trial = {
-  on_start: () => {
-    var trialInfo = document.getElementById('trial-info');
-    trialInfo.style.visibility = 'visible';
-
-    var trialNumber = document.getElementById('trial-number');
-    trialNumber.innerHTML = trialCount + '/' + trialTotal;
-  },
-  timeline:[
-      {
-        type: 'image-button-response',
-        stimulus: jsPsych.timelineVariable('image'),
-        choices: ['Harvest', 'Avoid'],
-        prompt: "<p>Harvest or avoid?</p>",
-        margin_horizontal: '16px',
-        stimulus_width: 300,
-      },
-
-      {
-        type: 'html-button-response',
-        stimulus: function() {
-          var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
-          var friendliness = jsPsych.timelineVariable('friendly', true);
-
-          update_bonus_pay(friendliness, avoidance);
-          var bonusValue = document.getElementById('bonus-value');
-          bonusValue.innerHTML = money_stringify.format(bonus_pay);
-
-          var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
-          var response = '';
-          var action = avoidance ? 'avoid' : 'harvest';
-          var summary = goodchoice ? 'good-'+action : 'bad-'+action;
-          jsPsych.data.get().addToLast({action: action});
-          jsPsych.data.get().addToLast({summary: summary});
-          if (avoidance) {
-            response += 'You avoided!<br>';
-            // response += friendliness ? "Bad choice, the bee was friendly." : "Good choice.";
-          } else {
-            response += 'You harvested!<br>';
-            // response += !friendliness ? "Bad choice, the bee was angry." : "Good choice.";
-          }
-          return `<img src="${jsPsych.timelineVariable('image', true)}" width="200">
-                  <p>This is the bee that you just saw.<br>${response}</p>
-          `},
-        choices: ['Continue'],
-        on_finish: () => {
-          trialCount++;
-        }
-      }
-   ],
-   conditional_function: function() {
-    if(condition_assignment == 'contingent'){
-    return true;
-    } else {
-      return false;
-    }
-  },
   timeline_variables: bee_64set_builder(bee_info),
   randomize_order: false
 }
