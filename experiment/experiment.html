@@ -46,10 +46,11 @@
         var timeline = [];
         var bonus_pay = 0.40;
 
-        // timeline.push({
-        //   type: 'fullscreen',
-        //   fullscreen_mode: true
-        // });
+        // enter fullscreen mode
+        timeline.push({
+          type: 'fullscreen',
+          fullscreen_mode: true
+        });
 
         var preload = {
             type: 'preload',
@@ -75,15 +76,15 @@
         timeline.push(post_questionnaire);
 
         // exit fullscreen mode
-        // timeline.push({
-        //   type: 'fullscreen',
-        //   fullscreen_mode: false
-        // });
+        timeline.push({
+          type: 'fullscreen',
+          fullscreen_mode: false
+        });
 
         jsPsych.init({
           timeline: timeline,
           display_element: 'jspsych-target',
-          // default_iti: 150, 
+          // default_iti: 400, 
           // exclusions: {
           //   min_width: 800,
           //   min_height: 600},
