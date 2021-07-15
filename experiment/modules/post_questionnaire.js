@@ -2,8 +2,6 @@
 
 
 /* to be completed:
-
-  payout calculator based on performance
   
   way to generate the data that Prolific needs for this extra pay:
     list of: 'participant ID',0.30 --> this format
@@ -11,22 +9,12 @@
 */
 
 
-function payout_calculator(successful_harvests, painful_harvests) {
-  var starting_bonus = 0.40;
-  var added_bonus = (0.02 * successful_harvests);
-  var subtracted_bonus = (-0.10 * painful_harvests);
-  var total_bonus = starting_bonus + added_bonus + subtracted_bonus;
-  return total_bonus
-}
-
-console.log(payout_calculator(4,1));
-
-
 var payout_feedback = {
   type: 'html-button-response',
   stimulus: () => {
-    var payout = 4;
-    return 'You made $'+payout+'.'},
+    return `You started with $2.50 of base pay.<br><br>
+            You made `+money_stringify.format(bonus_pay)+` in bonus pay,
+            for a grand total of <b>`+money_stringify.format(bonus_pay + 2.5)+`</b>.`},
   choices: ['Continue.'],
   margin_vertical: '16px'
 }
