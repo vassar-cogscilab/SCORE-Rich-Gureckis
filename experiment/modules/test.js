@@ -69,12 +69,20 @@ function bee_64set_builder(bee_group_object){
 function update_bonus_pay(friendliness, avoidance) {
   if(!avoidance){
     if(friendliness){
-      bonus_pay += 2;
+      bonus_pay += 0.02;
     } else {
-      bonus_pay -= 10;
+      bonus_pay -= 0.10;
+      if(bonus_pay < 0) {
+        bonus_pay = 0;
+      }
     }
   }
 }
+
+var money_stringify = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+});
 
 
 function conditional_instructions() {
@@ -117,9 +125,9 @@ var full_info_practice_trial = {
           var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
           var friendliness = jsPsych.timelineVariable('friendly', true);
 
-          // update_bonus_pay(friendliness, avoidance);
-          // var bonusValue = document.getElementById('bonus-value');
-          // bonusValue.innerHTML = bonus_pay;
+          update_bonus_pay(friendliness, avoidance);
+          var bonusValue = document.getElementById('bonus-value');
+          bonusValue.innerHTML = money_stringify.format(bonus_pay);
 
           var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
           var response = '';
@@ -159,6 +167,9 @@ var contingent_practice_trial = {
   on_start: () => {
     var trialInfo = document.getElementById('trial-info');
     trialInfo.style.visibility = 'visible';
+
+    var trialNumber = document.getElementById('trial-number');
+    trialNumber.innerHTML = trialCount + '/' + trialTotal;
   },
   timeline:[
       {
@@ -176,9 +187,9 @@ var contingent_practice_trial = {
           var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
           var friendliness = jsPsych.timelineVariable('friendly', true);
 
-          // update_bonus_pay(friendliness, avoidance);
-          // var bonusValue = document.getElementById('bonus-value');
-          // bonusValue.innerHTML = bonus_pay;
+          update_bonus_pay(friendliness, avoidance);
+          var bonusValue = document.getElementById('bonus-value');
+          bonusValue.innerHTML = money_stringify.format(bonus_pay);
 
           var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
           var response = '';
@@ -196,7 +207,10 @@ var contingent_practice_trial = {
           return `<img src="${jsPsych.timelineVariable('image', true)}" width="200">
                   <p>This is the bee that you just saw.<br>${response}</p>
           `},
-        choices: ['Continue']
+        choices: ['Continue'],
+        on_finish: () => {
+          trialCount++;
+        }
       }
    ],
    conditional_function: function() {
