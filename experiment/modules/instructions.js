@@ -1,3 +1,13 @@
+var animation_sequence = ["./materials/firstscreenshot.png", "./materials/midscreenshot.png", "./materials/fullscreenshot.png"]
+
+var animation_trial = {
+    type: 'animation',
+    stimuli: animation_sequence,
+    sequence_reps: 12
+};
+
+
+
 var instructions_quiz_attempt_count = 0;
 
 function conditional_instructions() {
@@ -153,5 +163,5 @@ var instruction_repeat = {
 }
 
 var instructions_sequence = {
-  timeline: [instructions, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
+  timeline: [animation_trial, instructions, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
 }
