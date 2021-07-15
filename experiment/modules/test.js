@@ -80,11 +80,16 @@ function conditional_instructions() {
   return response;
 }
 
+var trialCount = 1;
+var trialTotal = 64;
 
 var full_info_practice_trial = {
   on_start: () => {
     var trialInfo = document.getElementById('trial-info');
     trialInfo.style.visibility = 'visible';
+
+    var trialNumber = document.getElementById('trial-number');
+    trialNumber.innerHTML = trialCount + '/' + trialTotal;
   },
   timeline:[
       {
@@ -117,7 +122,10 @@ var full_info_practice_trial = {
           return `<img src="${jsPsych.timelineVariable('image', true)}" width="200">
                   <p>This is the bee that you just saw.<br>${response}</p>
           `},
-        choices: ['Continue']
+        choices: ['Continue'],
+        on_finish: () => {
+          trialCount++;
+        }
       }
    ],
   conditional_function: function() {
@@ -182,23 +190,26 @@ var contingent_practice_trial = {
   randomize_order: false
 }
 
-
+// trialCount and trialTotals reset from the welcome screen file
 var actual_trial = {
   timeline: [
       {
-          type: 'image-button-response',
-          stimulus: jsPsych.timelineVariable('image'),
-          choices: ['Harvest', 'Avoid'],
-          prompt: "<p>Harvest or avoid?</p>",
-          margin_horizontal: '16px'
+        on_start: () => {
+          var trialNumber = document.getElementById('trial-number');
+          trialNumber.innerHTML = trialCount + '/' + trialTotal;
+        },
+        type: 'image-button-response',
+        stimulus: jsPsych.timelineVariable('image'),
+        choices: ['Harvest', 'Avoid'],
+        prompt: "<p>Harvest or avoid?</p>",
+        margin_horizontal: '16px',
+        on_finish: () => {
+          trialCount++;
+        }
       }
    ],
   timeline_variables: bee_32set_builder(bee_info),
   randomize_order: false
 }
 
-var test = {
-  timeline: [actual_trial],
-  repetitions: 1
-}
 

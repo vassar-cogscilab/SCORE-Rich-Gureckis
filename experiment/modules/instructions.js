@@ -51,13 +51,13 @@ var instructions = {
       The bee varieties differ in four ways.`,
 
 
-      'They can have 2 or 6 legs. <img src="materials/instrlegs.png"></img>',
+      'They can have 2 or 6 legs.<br> <img src="materials/instrlegs.png"></img>',
 
-      'They can have single or double wings. <img src="materials/instrwings.png"></img>',
+      'They can have single or double wings.<br> <img src="materials/instrwings.png"></img>',
 
-      'They can have stripes or dots on their bodies. <img src="materials/instrstripes.png"></img>',
+      'They can have stripes or dots on their bodies.<br> <img src="materials/instrstripes.png"></img>',
 
-      'They can have antennae or no antennae.  <img src="materials/instrantennae.png"></img>',
+      'They can have antennae or no antennae.<br>  <img src="materials/instrantennae.png"></img>',
 
       `It's possible to learn to predict perfectly which bees are friendly and which are dangerous using these four features,
       so that you can harvest from bees that will give you honey while avoiding bees that would sting you.`,
