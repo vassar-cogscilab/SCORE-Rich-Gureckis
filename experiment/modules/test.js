@@ -75,19 +75,6 @@ var money_stringify = new Intl.NumberFormat('en-US', {
 });
 
 
-function conditional_instructions() {
-  var response = [];
-  if (condition_assignment  == 'contingent') {
-    response += `CONTIf you choose to avoid a hive, you won't gain or lose any money,<br>
-                and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
-  } else {
-    response += `FULLIf you choose to avoid a hive, you won't gain or lose any
-                money,<br>but you'll still find out whether the bees were friendly
-                or dangerous.`; // full-info assignment
-  }
-  return response;
-}
-
 var trialCount = 1;
 var trialTotal = 64;
 
