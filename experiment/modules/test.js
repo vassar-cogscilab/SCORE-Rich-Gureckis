@@ -66,6 +66,16 @@ function bee_64set_builder(bee_group_object){
   return first_32.concat(second_32);
 }
 
+function update_bonus_pay(friendliness, avoidance) {
+  if(!avoidance){
+    if(friendliness){
+      bonus_pay += 2;
+    } else {
+      bonus_pay -= 10;
+    }
+  }
+}
+
 
 function conditional_instructions() {
   var response = [];
@@ -106,6 +116,11 @@ var full_info_practice_trial = {
         stimulus: function() {
           var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
           var friendliness = jsPsych.timelineVariable('friendly', true);
+
+          // update_bonus_pay(friendliness, avoidance);
+          // var bonusValue = document.getElementById('bonus-value');
+          // bonusValue.innerHTML = bonus_pay;
+
           var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
           var response = '';
           var action = avoidance ? 'avoid' : 'harvest';
@@ -160,6 +175,11 @@ var contingent_practice_trial = {
         stimulus: function() {
           var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
           var friendliness = jsPsych.timelineVariable('friendly', true);
+
+          // update_bonus_pay(friendliness, avoidance);
+          // var bonusValue = document.getElementById('bonus-value');
+          // bonusValue.innerHTML = bonus_pay;
+
           var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
           var response = '';
           var action = avoidance ? 'avoid' : 'harvest';
