@@ -1,7 +1,7 @@
 var instructions_quiz_attempt_count = 0;
 
 function conditional_instructions() {
-  var response = [];
+  var response = '';
   if (condition_assignment  == 'contingent') {
     response += `CONTIf you choose to avoid a hive, you won't gain or lose any money,<br>
                 and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
@@ -9,6 +9,16 @@ function conditional_instructions() {
     response += `FULLIf you choose to avoid a hive, you won't gain or lose any
                 money,<br>but you'll still find out whether the bees were friendly
                 or dangerous.`; // full-info assignment
+  }
+  return response;
+}
+
+function conditional_diagram() {
+  var response = 'The diagram below summarizes the possibilities of each choice:<br>';
+  if(condition_assignment == 'contingent') {
+    response += '<img src="materials/instr_outcomes_standard.png"></img>'
+  } else {
+    response += '<img src="materials/instr_outcomes_fullinfo.png"></img>'
   }
   return response;
 }
@@ -61,6 +71,8 @@ var instructions = {
 
       `It's possible to learn to predict perfectly which bees are friendly and which are dangerous using these four features,
       so that you can harvest from bees that will give you honey while avoiding bees that would sting you.`,
+
+      conditional_diagram(),
 
       `Ready to go?`,
     ],
