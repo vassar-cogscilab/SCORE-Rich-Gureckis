@@ -85,14 +85,25 @@ var instructions_quiz_questions = [
     },
     {
       prompt: 'What happens when you avoid a bee variety?',
-      options: ['You do not learn if it was friendly or dangerous, and do not alter your bonus.',
-                'You learn if it was friendly or dangerous, but do not alter your bonus.',
-                'You learn if it was friendly or dangerous and alter your bonus_CORRECTFORNOW'],
+      options: ['CONT_You do not learn if it was friendly or dangerous, and do not alter your bonus.',
+                'FULL_You learn if it was friendly or dangerous, but do not alter your bonus.',
+                'You learn if it was friendly or dangerous and alter your bonus.'],
       required: true,
-      correct_response: 'You learn if it was friendly or dangerous and alter your bonus_CORRECTFORNOW',
+      correct_response: conditional_quiz(),
       name: 'Q3'
     }
 ]
+
+
+function conditional_quiz() {
+  var question3 = [];
+  if (condition_assignment  == 'contingent') {
+    question3 += 'CONT_You do not learn if it was friendly or dangerous, and do not alter your bonus.'; // contingent assignment
+  } else {
+    question3 += 'FULL_You learn if it was friendly or dangerous, but do not alter your bonus.'; // full-info assignment
+  }
+  return question3;
+}
 
 var post_instructions_quiz = {
   type: 'survey-multi-choice',
