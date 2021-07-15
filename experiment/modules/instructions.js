@@ -7,7 +7,6 @@ var animation_trial = {
 };
 
 
-
 var instructions_quiz_attempt_count = 0;
 
 function conditional_instructions() {
