@@ -150,6 +150,7 @@ var actual_trial = {
         choices: ['Harvest', 'Avoid'],
         prompt: "<p>Harvest or avoid?</p>",
         margin_horizontal: '16px',
+        stimulus_width: 300,
         on_finish: () => {
           trialCount++;
         }
