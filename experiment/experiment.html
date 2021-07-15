@@ -56,9 +56,15 @@
             type: 'preload',
             images: () => {
               var img = [];
+              // BEE IMAGES
               for (const i in BEES) {
                 img.push(BEES[i].image);
               }
+
+              // OTHER IMAGES
+              img.push('materials/instr_outcomes_fullinfo.png');
+              img.push('materials/instr_outcomes_standard.png');
+              img.push('materials/instr_outcomes_test.png');
               return img;
             },
             max_load_time: 30000,
