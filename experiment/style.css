@@ -47,6 +47,10 @@ body {
   /*visibility: hidden;*/
 }
 
+.jspsych-content {
+  max-width: 1010px;
+}
+
 @media (max-width: 600px) {
   #logotext {
     display: none;
