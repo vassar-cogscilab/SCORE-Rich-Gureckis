@@ -151,8 +151,14 @@ var actual_trial = {
         prompt: "<p>Harvest or avoid?</p>",
         margin_horizontal: '16px',
         stimulus_width: 300,
-        on_finish: () => {
+        on_finish: () => { // on finish, update trial count and bonus pay
           trialCount++;
+          var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
+          var friendliness = jsPsych.timelineVariable('friendly', true);
+          // console.log('avoided?:'+avoidance);
+          // console.log('friendly:'+friendliness);
+          update_bonus_pay(friendliness, avoidance);
+          // console.log(bonus_pay);
         }
       }
    ],
