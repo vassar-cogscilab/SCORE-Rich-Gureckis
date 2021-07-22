@@ -1,10 +1,10 @@
-var animation_sequence = ["./materials/firstscreenshot.png", "./materials/midscreenshot.png", "./materials/fullscreenshot.png"]
+// var animation_sequence = ["./materials/firstscreenshot.png", "./materials/midscreenshot.png", "./materials/fullscreenshot.png"]
 
-var animation_trial = {
-    type: 'animation',
-    stimuli: animation_sequence,
-    sequence_reps: 12
-};
+// var animation_trial = {
+//     type: 'animation',
+//     stimuli: animation_sequence,
+//     sequence_reps: 12
+// };
 
 
 var instructions_quiz_attempt_count = 0;
@@ -12,12 +12,14 @@ var instructions_quiz_attempt_count = 0;
 function conditional_instructions() {
   var response = [];
   if (condition_assignment  == 'contingent') {
-    response += `CONTIf you choose to avoid a hive, you won't gain or lose any money,<br>
-                and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
+    response += `DEMO MODE <br><i>(You've been assigned to the CONTINGENT condition.  This text would not appear during the experiment.)</i><br><br>
+                  If you choose to avoid a hive, you won't gain or lose any money,<br>
+                  and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
   } else {
-    response += `FULLIf you choose to avoid a hive, you won't gain or lose any
-                money,<br>but you'll still find out whether the bees were friendly
-                or dangerous.`; // full-info assignment
+    response += `DEMO MODE <br><i>(You've been assigned to the FULL-INFORMATION condition.  This text would not appear during the experiment.)</i><br><br>
+                  If you choose to avoid a hive, you won't gain or lose any
+                  money,<br>but you'll still find out whether the bees were friendly
+                  or dangerous.`; // full-info assignment
   }
   return response;
 }
@@ -162,5 +164,5 @@ var instruction_repeat = {
 }
 
 var instructions_sequence = {
-  timeline: [animation_trial, instructions, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
+  timeline: [instructions, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
 }
