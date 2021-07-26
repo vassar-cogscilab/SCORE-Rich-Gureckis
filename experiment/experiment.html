@@ -50,7 +50,10 @@
         // enter fullscreen mode
         timeline.push({
           type: 'fullscreen',
-          fullscreen_mode: true
+          fullscreen_mode: true,
+          on_start: () => {
+              console.log(condition_assignment)
+            },
         });
 
         var preload = {
@@ -64,7 +67,7 @@
             },
             max_load_time: 30000,
             message: 'Please wait while the experiment loads',
-            error_message: 'The experiment failed to load. Please contact the researcher.'
+            error_message: 'The experiment failed to load. Please contact the researcher.',
         };
 
         timeline.push(preload);
