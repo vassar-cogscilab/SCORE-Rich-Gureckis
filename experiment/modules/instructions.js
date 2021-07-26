@@ -81,6 +81,15 @@ var instructions = {
 
 var instructions_quiz_questions = [
     {
+      prompt: 'Which of the following are features of the bee varieties?',
+      options: ['Two or six legs', 'Square or round body', 'Single or compound eyes',
+                'Stripes or spots on body', 'Stinger or no stinger', 
+                'Single or double wings', 'Tall or short body', 'Antennae or no antennae'],
+      required: true,
+      correct_response: ['Two or six legs', 'Stripes or spots on body', 'Single or double wings', 'Antennae or no antennae'],
+      name: 'Q0'
+    },
+    {
       prompt: 'Can a bee variety change from being friendly to dangerous or dangerous to friendly over time?',
       options: ['No.CORRECT', 'Yes.'],
       required: true,
@@ -123,10 +132,11 @@ var post_instructions_quiz = {
     instructions_quiz_attempt_count++;
   },
   on_finish: (data) => {
-    var Q1_correct = jsPsych.pluginAPI.compareKeys(data.response.Q1, instructions_quiz_questions[0].correct_response);
-    var Q2_correct = jsPsych.pluginAPI.compareKeys(data.response.Q2, instructions_quiz_questions[1].correct_response);
-    var Q3_correct = jsPsych.pluginAPI.compareKeys(data.response.Q3, instructions_quiz_questions[2].correct_response);
-    data.correct = Q1_correct && Q2_correct && Q3_correct;
+    var Q0_correct = jsPsych.pluginAPI.compareKeys(data.response.Q1, instructions_quiz_questions[0].correct_response);
+    var Q1_correct = jsPsych.pluginAPI.compareKeys(data.response.Q1, instructions_quiz_questions[1].correct_response);
+    var Q2_correct = jsPsych.pluginAPI.compareKeys(data.response.Q2, instructions_quiz_questions[2].correct_response);
+    var Q3_correct = jsPsych.pluginAPI.compareKeys(data.response.Q3, instructions_quiz_questions[3].correct_response);
+    data.correct = Q0_correct && Q1_correct && Q2_correct && Q3_correct;
   }
 }
 
