@@ -162,7 +162,6 @@ var post_instructions_quiz = {
   }
 } 
 
-// var quiz_passed = false
 
 var instructions_quiz_feedback = {
 type: 'html-button-response',
@@ -202,5 +201,5 @@ var instruction_repeat = {
 }
 
 var instructions_sequence = {
-  timeline: [post_instructions_quiz_first, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
+  timeline: [instructions, post_instructions_quiz_first, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
 }
