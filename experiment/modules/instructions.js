@@ -12,12 +12,10 @@ var instructions_quiz_attempt_count = 0;
 function conditional_instructions() {
   var response = [];
   if (condition_assignment  == 'contingent') {
-    response += `DEMO MODE <br><i>(You've been assigned to the CONTINGENT condition.  This text would not appear during the experiment.)</i><br><br>
-                  If you choose to avoid a hive, you won't gain or lose any money,<br>
+    response += `If you choose to avoid a hive, you won't gain or lose any money,<br>
                   and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
   } else {
-    response += `DEMO MODE <br><i>(You've been assigned to the FULL-INFORMATION condition.  This text would not appear during the experiment.)</i><br><br>
-                  If you choose to avoid a hive, you won't gain or lose any
+    response += `If you choose to avoid a hive, you won't gain or lose any
                   money,<br>but you'll still find out whether the bees were friendly
                   or dangerous.`; // full-info assignment
   }
