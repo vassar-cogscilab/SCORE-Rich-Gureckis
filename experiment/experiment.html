@@ -34,7 +34,7 @@
       <div id="header">
         <div id="logo-wrapper">
           <img src="materials/VC_logo.png" alt="Vassar Logo" id="vclogo">
-          <h3 id="logotext">Vassar College Cognitive Science | Demo Experiment - Condition = '<span id="condition_asmt"></span>'</h3>
+          <h3 id="logotext">Vassar College Cognitive Science</h3>
         </div>
         <div id="trial-info">
           <p><span class="trial-info-title">Trial: </span> <span id="trial-number">1/64</span></p>
@@ -45,10 +45,11 @@
     </body>
     <script>
 
-      var condition = document.getElementById('condition_asmt');
-      condition_asmt.innerHTML = condition_assignment;
 
-
+      /* Took out old 'demo mode' code that displayed condition assignment in header.
+      // var condition = document.getElementById('condition_asmt');
+      // condition_asmt.innerHTML = condition_assignment;
+      */
     
         var timeline = [];
         var bonus_pay = 0.40;

@@ -84,6 +84,8 @@ var instructions = {
       conditional_diagram(),
 
       `Ready to go?`,
+
+      `Before we begin, you will  take a short quiz on how the experiment will work.`
     ],
   show_clickable_nav: true,
   // show_page_number: true
