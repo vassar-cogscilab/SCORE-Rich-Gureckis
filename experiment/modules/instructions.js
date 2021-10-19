@@ -176,27 +176,27 @@ var post_instructions_quiz = {
 
 
 var instructions_quiz_feedback = {
-type: 'html-button-response',
-stimulus: () => {
-  console.log('first check'+first_checkpoint);
-  console.log('second check'+second_checkpoint);
-  var quiz_passed = first_checkpoint && second_checkpoint;
-  console.log('passed?'+quiz_passed);
-  if(quiz_passed) {
-    return `<p>Congrats, you got everything right<br>When you're ready, click the button below to continue to the experiment.</p>`
-  } else if (instructions_quiz_attempt_count < 2) {
-    return `<p>You did not answer all comprehension questions correctly.<br>Press <b>continue</b> to review the instructions again.</p>`
-  } else {
-    return `<p>At least one answer is incorrect. Your participation is no longer requested in this experiment.</p>`
+  type: 'html-button-response',
+  stimulus: () => {
+    console.log('first check'+first_checkpoint);
+    console.log('second check'+second_checkpoint);
+    var quiz_passed = first_checkpoint && second_checkpoint;
+    console.log('passed?'+quiz_passed);
+    if(quiz_passed) {
+      return `<p>Congrats, you got everything right<br>When you're ready, click the button below to continue to the experiment.</p>`
+    } else if (instructions_quiz_attempt_count < 2) {
+      return `<p>You did not answer all comprehension questions correctly.<br>Press <b>continue</b> to review the instructions again.</p>`
+    } else {
+      return `<p>At least one answer is incorrect. Your participation is no longer requested in this experiment.</p>`
+    }
+  },
+  choices: ['Continue'],
+  on_finish: () => {
+    if (instructions_quiz_attempt_count >= 2 && !jsPsych.data.get().last(2).values()[0].correct){
+      document.exitFullscreen();
+      jsPsych.endExperiment();
+    }
   }
-},
-choices: ['Continue'],
-on_finish: () => {
-  if (instructions_quiz_attempt_count >= 2 && !jsPsych.data.get().last(2).values()[0].correct){
-    document.exitFullscreen();
-    jsPsych.endExperiment();
-  }
-}
 }
 
 
