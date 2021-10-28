@@ -192,7 +192,10 @@ var instructions_quiz_feedback = {
   },
   choices: ['Continue'],
   on_finish: () => {
-    if (instructions_quiz_attempt_count >= 2 && !jsPsych.data.get().last(2).values()[0].correct){
+    var first_checkpoint = jsPsych.data.get().last(3).values()[0].correct;
+    var second_checkpoint = jsPsych.data.get().last(2).values()[0].correct;
+    var all_correct = first_checkpoint && second_checkpoint;
+    if (instructions_quiz_attempt_count >= 2 && !all_correct){
       document.exitFullscreen();
       jsPsych.endExperiment();
     }
