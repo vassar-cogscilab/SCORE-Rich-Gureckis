@@ -114,18 +114,22 @@ var practice_trial = {
           jsPsych.data.get().addToLast({action: action});
           jsPsych.data.get().addToLast({summary: summary});
           if (avoidance) {
-            response += 'You avoided!<br>';
+            // response += 'You avoided!<br>';
             if(condition_assignment == 'full-information'){
-              response += friendliness ? "Bad choice, the bee was friendly." : "Good choice.";
+              response += friendliness ? "Bad choice, the bee was friendly." : "Good choice. This bee would have stung you.";
             }
+            response += `<br>Bonus Pay is unchanged, and remains at ${money_stringify.format(bonus_pay)}.`
           } else {
-            response += 'You harvested!<br>';
-            if(condition_assignment == 'full-information'){
-              response += !friendliness ? "Bad choice, the bee was angry." : "Good choice.";
-            }
+            // response += 'You harvested.<br>';
+            response += !friendliness ? "Bad choice, the bee was angry.<br><b>You have been stung!</b>" : "Successful harvest!";
+            response += !friendliness ? "<br>Your pay has been decreased by $0.10. " : "<br>Your pay has increased by $0.02. ";
+            response += `Your bonus pay is now ${money_stringify.format(bonus_pay)}.`
           }
-          return `<img src="${jsPsych.timelineVariable('image', true)}" width="200">
-                  <p>This is the bee that you just saw.<br>${response}</p>
+          return `
+                  <p><b>Action: <em>${action}</em></b></p>
+                  <p>This is the bee that you just saw.</p>
+                  <img src="${jsPsych.timelineVariable('image', true)}" width="200">
+                  <p>${response}</p>
           `},
         choices: ['Continue'],
         on_finish: () => {
