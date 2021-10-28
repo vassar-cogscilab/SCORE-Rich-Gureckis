@@ -203,11 +203,14 @@ var instructions_quiz_feedback = {
 var instruction_repeat = {
   timeline: [
     instructions,
+    post_instructions_quiz_first,
     post_instructions_quiz,
     instructions_quiz_feedback
   ],
   conditional_function: () => {
-    all_correct = jsPsych.data.get().last(2).values()[0].correct;
+    var first_checkpoint = jsPsych.data.get().last(3).values()[0].correct;
+    var second_checkpoint = jsPsych.data.get().last(2).values()[0].correct;
+    var all_correct = first_checkpoint && second_checkpoint;
     return !all_correct;
   }
 }
