@@ -3,7 +3,7 @@
   a condition assignment (contingent or full-info), a relevant dimensions array,
   and a javascript object that represents the bee group.
 */
-var cond_assignment_num = Math.floor(Math.random() * 48); // TEMPORARY random assigned variable in [0, 47]
+// var cond_assignment_num = Math.floor(Math.random() * 48); // TEMPORARY random assigned variable in [0, 47]
 
 var dimensions = {
   'antennae': ['A', 'B'],  // Antennae or Bald
@@ -93,7 +93,7 @@ var random_assign_bee_group = (dimensions_arr) => { // NO LONGER USED
 
   Returns an array containing the names of the relevant dimensions.
 */
-var get_relevant_dimentsions = (id_num) => {
+var get_relevant_dimensions = (id_num) => {
   var ret_arr = [];
   var letters = possible_alignments[id_num % 24].split("");
   var dimension_names = ['antennae', 'wings', 'pattern', 'legs'];
@@ -103,13 +103,20 @@ var get_relevant_dimentsions = (id_num) => {
   return ret_arr;
 }
 
-var condition_assignment = cond_assignment_num > 23 ? 'contingent' : 'full-information';
-var relevant_dimension_assignment = get_relevant_dimentsions(cond_assignment_num);
-var bee_info = assign_bee_group(cond_assignment_num);
 
-jsPsych.data.addProperties({
-    condition: condition_assignment,                           // contingent or full-information
-    relevant_dimensions: relevant_dimension_assignment,        // array of length 2, containing 2 of ['antennae', 'wings', 'pattern', 'legs']
-    bee_group: bee_info                                        // an object as specified above
-});
+var condition_assignment;
+var relevant_dimension_assignment;
+var bee_info;
+
+var create_condition_assignment = (cond_assignment_num) => {
+  condition_assignment = cond_assignment_num > 23 ? 'contingent' : 'full-information';
+  relevant_dimension_assignment = get_relevant_dimensions(cond_assignment_num);
+  bee_info = assign_bee_group(cond_assignment_num);
+
+  jsPsych.data.addProperties({
+      condition: condition_assignment,                           // contingent or full-information
+      relevant_dimensions: relevant_dimension_assignment,        // array of length 2, containing 2 of ['antennae', 'wings', 'pattern', 'legs']
+      bee_group: bee_info                                        // an object as specified above
+  });
+}
 

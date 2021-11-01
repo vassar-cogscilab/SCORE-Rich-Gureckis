@@ -146,11 +146,19 @@ var post_instructions_quiz_first = {
   type: 'survey-multi-select',
   questions: instructions_quiz_first,
   on_finish: (data) => {
-    var correct1 = jsPsych.pluginAPI.compareKeys(data.response.Q0[0], instructions_quiz_first[0].correct_response[0]);
-    var correct2 = jsPsych.pluginAPI.compareKeys(data.response.Q0[1], instructions_quiz_first[0].correct_response[1]);
-    var correct3 = jsPsych.pluginAPI.compareKeys(data.response.Q0[2], instructions_quiz_first[0].correct_response[2]);
-    var correct4 = jsPsych.pluginAPI.compareKeys(data.response.Q0[3], instructions_quiz_first[0].correct_response[3]);
-    data.correct = correct1 && correct2 && correct3 && correct4;
+    var responses = data.response.Q0;
+    var correct_responses = instructions_quiz_first[0].correct_response;
+    var correct = true;
+    if(responses.length == correct_responses.length){
+      for(var r of responses){
+        if(!correct_responses.includes(r)){
+          correct = false;
+        }
+      }
+    } else {
+      correct = false;
+    }
+    data.correct = correct;
     first_checkpoint = data.correct
     console.log(data.correct);
   }
@@ -165,9 +173,9 @@ var post_instructions_quiz = {
     instructions_quiz_attempt_count++;
   },
   on_finish: (data) => {
-    var Q1_correct = jsPsych.pluginAPI.compareKeys(data.response.Q1, instructions_quiz_questions[0].correct_response);
-    var Q2_correct = jsPsych.pluginAPI.compareKeys(data.response.Q2, instructions_quiz_questions[1].correct_response);
-    var Q3_correct = jsPsych.pluginAPI.compareKeys(data.response.Q3, instructions_quiz_questions[2].correct_response);
+    var Q1_correct = data.response.Q1 == instructions_quiz_questions[0].correct_response;
+    var Q2_correct = data.response.Q2 == instructions_quiz_questions[1].correct_response;
+    var Q3_correct = data.response.Q3 == instructions_quiz_questions[2].correct_response;
     data.correct = Q1_correct && Q2_correct && Q3_correct;
     second_checkpoint = data.correct;
     console.log(data.correct);
