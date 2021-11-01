@@ -38,7 +38,7 @@
         </div>
         <div id="trial-info">
           <p><span class="trial-info-title">Trial: </span> <span id="trial-number">1/64</span></p>
-          <p id="bonus-tracker"><span class="trial-info-title">Current Bonus: </span><span id="bonus-value">$0.40</span></p>
+          <p id="bonus-tracker"><span class="trial-info-title">Current Bonus: </span><span id="bonus-value">$0.54</span></p>
         </div>
       </div>
       <div id="jspsych-target"></div>
@@ -70,7 +70,7 @@
         createBeeTrials();
     
         var timeline = [];
-        var bonus_pay = 0.40;
+        var bonus_pay = 0.54;
 
         // enter fullscreen mode
         timeline.push({
@@ -91,6 +91,10 @@
               }
 
               // OTHER IMAGES
+              img.push('materials/instrlegs.png')
+              img.push('materials/instrwings.png')
+              img.push('materials/instrstripes.png')
+              img.push('materials/instrantennae.png')
               img.push('materials/instr_outcomes_fullinfo.png');
               img.push('materials/instr_outcomes_standard.png');
               img.push('materials/instr_outcomes_test.png');
