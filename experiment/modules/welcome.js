@@ -7,7 +7,7 @@ var welcome_screen = {
 
 var mid_point_screen = {
   type: 'html-keyboard-response',
-  stimulus: 'You have completed the training segment of this experiment.<br><br>You will now begin the test phase -- this time, a shorter trial in which you will receive no feedback.br><br>Press any key to begin.',
+  stimulus: 'You have completed the first part of this experiment.<br><br>You will now begin a shorter second part, in which you will receive no feedback.<br>The same rules regarding bonus pay apply.<br><br>Press any key to begin.',
   on_start: () => {
     var bonusTracker = document.getElementById('bonus-tracker');
     bonusTracker.style.display = 'none';

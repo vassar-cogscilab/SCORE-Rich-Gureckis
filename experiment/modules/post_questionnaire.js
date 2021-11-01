@@ -48,7 +48,7 @@ var post_q3 = {
   type: 'survey-multi-choice',
   questions: [
         {
-          prompt: 'Did you use pen and paper?',
+          prompt: 'Did you use pen and paper, or any other materials, to help you remember features of the bees?',
           options: ["Yes","No"],
           name: 'pen-and-paper',
           required: true,
