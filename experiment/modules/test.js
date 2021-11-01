@@ -125,7 +125,7 @@ function createBeeTrials(){
               response += `<br>Your bonus pay is unchanged, and remains at ${money_stringify.format(bonus_pay)}.`
             } else {
               // response += 'You harvested.<br>';
-              response += !friendliness ? `<span class="redText">Bad choice, the bee was angry.</span><br><b>You have been stung!</b>` : `<span class="greenText">Successful harvest!</span>`;
+              response += !friendliness ? `<span class="redText">Bad choice, the bee was angry.</span><br><b>You have been stung!</b>` : `<span class="greenText"><b>Successful harvest!</b></span>`;
               response += !friendliness ? "<br>Your pay has been decreased by $0.10. " : "<br>Your pay has increased by $0.02. ";
               response += `Your bonus pay is now ${money_stringify.format(bonus_pay)}.`
             }
