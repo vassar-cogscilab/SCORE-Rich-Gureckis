@@ -78,96 +78,103 @@ var money_stringify = new Intl.NumberFormat('en-US', {
 var trialCount = 1;
 var trialTotal = 64;
 
-var practice_trial = {
-  on_start: () => {
-    var trialInfo = document.getElementById('trial-info');
-    trialInfo.style.visibility = 'visible';
+var practice_trial;
+var actual_trial;
 
-    var trialNumber = document.getElementById('trial-number');
-    trialNumber.innerHTML = trialCount + '/' + trialTotal;
-  },
-  timeline:[
-      {
-        type: 'image-button-response',
-        stimulus: jsPsych.timelineVariable('image'),
-        choices: ['Harvest', 'Avoid'],
-        prompt: "<p>Harvest or avoid?</p>",
-        margin_horizontal: '16px',
-        stimulus_width: 300,
-        render_on_canvas: false
-      },
-
-      {
-        type: 'html-button-response',
-        stimulus: function() {
-          var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
-          var friendliness = jsPsych.timelineVariable('friendly', true);
-
-          update_bonus_pay(friendliness, avoidance);
-          var bonusValue = document.getElementById('bonus-value');
-          bonusValue.innerHTML = money_stringify.format(bonus_pay);
-
-          var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
-          var response = '';
-          var action = avoidance ? 'avoid' : 'harvest';
-          var summary = goodchoice ? 'good-'+action : 'bad-'+action;
-          jsPsych.data.get().addToLast({action: action});
-          jsPsych.data.get().addToLast({summary: summary});
-          if (avoidance) {
-            // response += 'You avoided!<br>';
-            if(condition_assignment == 'full-information'){
-              response += friendliness ? `<span class="redText">Bad choice,</span> the bee was friendly.` : `<span class="greenText">Good choice!</span>  This bee would have stung you.`;
-            }
-            response += `<br>Your bonus pay is unchanged, and remains at ${money_stringify.format(bonus_pay)}.`
-          } else {
-            // response += 'You harvested.<br>';
-            response += !friendliness ? `<span class="redText">Bad choice, the bee was angry.</span><br><b>You have been stung!</b>` : `<span class="greenText">Successful harvest!</span>`;
-            response += !friendliness ? "<br>Your pay has been decreased by $0.10. " : "<br>Your pay has increased by $0.02. ";
-            response += `Your bonus pay is now ${money_stringify.format(bonus_pay)}.`
-          }
-          return `
-                  <p><b>Action: <em>${action}</em></b></p>
-                  <p>This is the bee that you just saw.</p>
-                  <img src="${jsPsych.timelineVariable('image', true)}" width="200">
-                  <p>${response}</p>
-          `},
-        choices: ['Continue'],
-        on_finish: () => {
-          trialCount++;
-        }
-      }
-   ],
-  timeline_variables: bee_64set_builder(bee_info),
-  randomize_order: false
-}
-
-// trialCount and trialTotals reset from the welcome screen file
-var actual_trial = {
-  timeline: [
-      {
-        on_start: () => {
-          var trialNumber = document.getElementById('trial-number');
-          trialNumber.innerHTML = trialCount + '/' + trialTotal;
+function createBeeTrials(){
+  practice_trial = {
+    on_start: () => {
+      var trialInfo = document.getElementById('trial-info');
+      trialInfo.style.visibility = 'visible';
+  
+      var trialNumber = document.getElementById('trial-number');
+      trialNumber.innerHTML = trialCount + '/' + trialTotal;
+    },
+    timeline:[
+        {
+          type: 'image-button-response',
+          stimulus: jsPsych.timelineVariable('image'),
+          choices: ['Harvest', 'Avoid'],
+          prompt: "<p>Harvest or avoid?</p>",
+          margin_horizontal: '16px',
+          stimulus_width: 300,
+          render_on_canvas: false
         },
-        type: 'image-button-response',
-        stimulus: jsPsych.timelineVariable('image'),
-        choices: ['Harvest', 'Avoid'],
-        prompt: "<p>Harvest or avoid?</p>",
-        margin_horizontal: '16px',
-        stimulus_width: 300,
-        on_finish: () => { // on finish, update trial count and bonus pay
-          trialCount++;
-          var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
-          var friendliness = jsPsych.timelineVariable('friendly', true);
-          // console.log('avoided?:'+avoidance);
-          // console.log('friendly:'+friendliness);
-          update_bonus_pay(friendliness, avoidance);
-          // console.log(bonus_pay);
+  
+        {
+          type: 'html-button-response',
+          stimulus: function() {
+            var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
+            var friendliness = jsPsych.timelineVariable('friendly', true);
+  
+            update_bonus_pay(friendliness, avoidance);
+            var bonusValue = document.getElementById('bonus-value');
+            bonusValue.innerHTML = money_stringify.format(bonus_pay);
+  
+            var goodchoice = (avoidance && !friendliness) || (!avoidance && friendliness);
+            var response = '';
+            var action = avoidance ? 'avoid' : 'harvest';
+            var summary = goodchoice ? 'good-'+action : 'bad-'+action;
+            jsPsych.data.get().addToLast({action: action});
+            jsPsych.data.get().addToLast({summary: summary});
+            if (avoidance) {
+              // response += 'You avoided!<br>';
+              if(condition_assignment == 'full-information'){
+                response += friendliness ? `<span class="redText">Bad choice,</span> the bee was friendly.` : `<span class="greenText">Good choice!</span>  This bee would have stung you.`;
+              }
+              response += `<br>Your bonus pay is unchanged, and remains at ${money_stringify.format(bonus_pay)}.`
+            } else {
+              // response += 'You harvested.<br>';
+              response += !friendliness ? `<span class="redText">Bad choice, the bee was angry.</span><br><b>You have been stung!</b>` : `<span class="greenText"><b>Successful harvest!</b></span>`;
+              response += !friendliness ? "<br>Your pay has been decreased by $0.10. " : "<br>Your pay has increased by $0.02. ";
+              response += `Your bonus pay is now ${money_stringify.format(bonus_pay)}.`
+            }
+            return `
+                    <p><b>Action: <em>${action}</em></b></p>
+                    <p>This is the bee that you just saw.</p>
+                    <img src="${jsPsych.timelineVariable('image', true)}" width="200">
+                    <p>${response}</p>
+            `},
+          choices: ['Continue'],
+          on_finish: () => {
+            trialCount++;
+          }
         }
-      }
-   ],
-  timeline_variables: bee_32set_builder(bee_info),
-  randomize_order: false
+     ],
+    timeline_variables: bee_64set_builder(bee_info),
+    randomize_order: false
+  }
+  
+  // trialCount and trialTotals reset from the welcome screen file
+  actual_trial = {
+    timeline: [
+        {
+          on_start: () => {
+            var trialNumber = document.getElementById('trial-number');
+            trialNumber.innerHTML = trialCount + '/' + trialTotal;
+          },
+          type: 'image-button-response',
+          stimulus: jsPsych.timelineVariable('image'),
+          choices: ['Harvest', 'Avoid'],
+          prompt: "<p>Harvest or avoid?</p>",
+          margin_horizontal: '16px',
+          stimulus_width: 300,
+          on_finish: () => { // on finish, update trial count and bonus pay
+            trialCount++;
+            var avoidance = jsPsych.data.getLastTrialData().select('response').values[0] == 1 ? true : false;
+            var friendliness = jsPsych.timelineVariable('friendly', true);
+            // console.log('avoided?:'+avoidance);
+            // console.log('friendly:'+friendliness);
+            update_bonus_pay(friendliness, avoidance);
+            // console.log(bonus_pay);
+          }
+        }
+     ],
+    timeline_variables: bee_32set_builder(bee_info),
+    randomize_order: false
+  }
+  
+  
+  
 }
-
 
