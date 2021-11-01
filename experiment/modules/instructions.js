@@ -114,9 +114,9 @@ var instructions_quiz_questions = [
   },
   {
     prompt: 'How can you learn to tell whether a bee variety is dangerous?',
-    options: ['Based on the color of the bee.', 'Based on the four features of the bee', 'Based on the order in which you see the bees.'],
+    options: ['Based on the color of the bee.', 'Based on the four features of the bee.', 'Based on the order in which you see the bees.'],
     required: true,
-    correct_response: 'Based on the four features of the bee',
+    correct_response: 'Based on the four features of the bee.',
     name: 'Q2'
   },
   {
@@ -133,9 +133,9 @@ var instructions_quiz_questions = [
 function conditional_quiz() {
 var question3 = '';
 if (condition_assignment  == 'contingent') {
-  question3 += 'CONT_You do not learn if it was friendly or dangerous, and do not alter your bonus.'; // contingent assignment
+  question3 += 'You do not learn if it was friendly or dangerous, and do not alter your bonus.'; // contingent assignment
 } else {
-  question3 += 'FULL_You learn if it was friendly or dangerous, but do not alter your bonus.'; // full-info assignment
+  question3 += 'You learn if it was friendly or dangerous, but do not alter your bonus.'; // full-info assignment
 }
 return question3;
 }
