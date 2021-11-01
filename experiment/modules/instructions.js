@@ -107,9 +107,9 @@ var instructions_quiz_first = [
 var instructions_quiz_questions = [
   {
     prompt: 'Can a bee variety change from being friendly to dangerous or dangerous to friendly over time?',
-    options: ['No.CORRECT', 'Yes.'],
+    options: ['No.', 'Yes.'],
     required: true,
-    correct_response: 'No.CORRECT',
+    correct_response: 'No.',
     name: 'Q1'
   },
   {
