@@ -118,7 +118,7 @@ var practice_trial = {
             if(condition_assignment == 'full-information'){
               response += friendliness ? `<span class="redText">Bad choice,</span> the bee was friendly.` : `<span class="greenText">Good choice!</span>  This bee would have stung you.`;
             }
-            response += `<br>Bonus Pay is unchanged, and remains at ${money_stringify.format(bonus_pay)}.`
+            response += `<br>Your bonus pay is unchanged, and remains at ${money_stringify.format(bonus_pay)}.`
           } else {
             // response += 'You harvested.<br>';
             response += !friendliness ? `<span class="redText">Bad choice, the bee was angry.</span><br><b>You have been stung!</b>` : `<span class="greenText">Successful harvest!</span>`;
