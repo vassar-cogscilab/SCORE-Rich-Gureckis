@@ -51,11 +51,23 @@
       // condition_asmt.innerHTML = condition_assignment;
       */
 
-      var CONDITION = 0;
+      // capture info from Prolific
+      var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
+      var study_id = jsPsych.data.getURLVariable('STUDY_ID');
+      var session_id = jsPsych.data.getURLVariable('SESSION_ID');
 
-      create_condition_assignment(CONDITION);
+      jsPsych.data.addProperties({
+        subject_id: subject_id,
+        study_id: study_id,
+        session_id: session_id
+      });
 
-      createBeeTrials();
+      serverComm.assign_condition(subject_id, 48, start_experiment, experiment_fail);
+
+      function start_experiment(condition){
+        create_condition_assignment(condition);
+
+        createBeeTrials();
     
         var timeline = [];
         var bonus_pay = 0.40;
@@ -114,6 +126,14 @@
               jsPsych.data.displayData();
           }
         });
-        
+      }
+
+      function experiment_fail(){
+        document.querySelector('#jspsych-target').innerHTML=`
+          <div style="width:800px; margin: 200px auto;">
+            <p>Sorry, there was a technical problem with the experiment. It is not working at the moment.</p>
+          </div>
+        `;
+      }
     </script>
 </html>
