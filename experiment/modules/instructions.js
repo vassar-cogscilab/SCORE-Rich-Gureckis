@@ -13,11 +13,11 @@ function conditional_instructions() {
   var response = '';
   if (condition_assignment  == 'contingent') {
     response += `If you choose to avoid a hive, you won't gain or lose any money,<br>
-                  and you won't discover whether the bees there were friendly or dangerous.`; // contingent assignment
+                  and <strong>you won't discover whether the bees there were friendly or dangerous.<strong>`; // contingent assignment
   } else {
     response += `If you choose to avoid a hive, you won't gain or lose any
-                  money,<br>but you'll still find out whether the bees were friendly
-                  or dangerous.`; // full-info assignment
+                  money,<br>but <strong>you will still find out whether the bees were friendly
+                  or dangerous.<strong>`; // full-info assignment
   }
   return response;
 }
@@ -27,7 +27,7 @@ function conditional_diagram() {
   if(condition_assignment == 'contingent') {
     response += '<img src="materials/instr_outcomes_standard.png"></img>'
   } else {
-    response += '<img src="materials/instr_outcomes_fullinfo.png"></img>'
+    response += '<img src="materials/instr_outcomes_fullinfo.png"></img>' // not entirely sure what this idea behind this graphic is, although it surely won't hurt to include.
   }
   return response;
 }
@@ -37,7 +37,7 @@ function conditional_diagram() {
 var instructions = {
   type: 'instructions',
     pages: [
-      `In this experiment, you will play a simple video game in which you take the role of a beekeeper collecting honey.`,
+      `In this experiment, you will play a simple video game in which you take on the role of a beekeeper collecting honey.`,
 
       `Most of your beehives have friendly bees, which will allow you
       to collect honey.  Unfortunately, some of your colonies
@@ -49,12 +49,12 @@ var instructions = {
 
       `You will collect honey from <strong>64</strong> beehives, which contain several
       different bee varieties. At each hive, you will see one of the
-      bees that live there and then need to choose whether to harvest
+      bees that live there and will then need to choose whether to harvest
       honey from the hive or to avoid it.`,
 
-      ` If you choose to harvest the hive, you'll be able to collect
+      ` If you choose to harvest the hive...<br> you will be able to collect
       honey if the bee variety is friendly, but will be stung if the
-      bee variety is dangerous. <strong>Collecting honey adds $0.02 to
+      bee variety is dangerous. <br><br><strong>Collecting honey adds $0.02 to
       your bonus</strong> for the experiment, while <strong>being
       stung subtracts $0.10</strong> because you need expensive
       medicine to treat the sting.`,
@@ -66,7 +66,7 @@ var instructions = {
       dangerous over the course of the experiment.`,
 
       `Each hive is home to a single variety of bees, and these varieties have
-      different features which can allow you to tell them apart and tell which will be dangerous.<br>
+      different features which can allow you to tell them apart and tell which will be dangerous.<br><br>
       The bee varieties differ in four ways.`,
 
 
@@ -78,14 +78,14 @@ var instructions = {
 
       'They can have antennae or no antennae.<br>  <img src="materials/instrantennae.png"></img>',
 
-      `It's possible to learn to predict perfectly which bees are friendly and which are dangerous using these four features,
+      `It's possible to learn to predict perfectly which bees are friendly and which are dangerous using these four features,<br>
       so that you can harvest from bees that will give you honey while avoiding bees that would sting you.`,
 
       conditional_diagram(),
 
       `Ready to go?`,
 
-      `Before we begin, you will  take a short quiz on how the experiment will work.`
+      `Before we begin, you will take a short quiz on how the experiment will work.`
     ],
   show_clickable_nav: true,
   // show_page_number: true
@@ -114,15 +114,15 @@ var instructions_quiz_questions = [
   },
   {
     prompt: 'How can you learn to tell whether a bee variety is dangerous?',
-    options: ['Based on the color of the bee.', 'Based on the four features of the bee.CORRECT', 'Based on the order in which you see the bees.'],
+    options: ['Based on the color of the bee.', 'Based on the four features of the bee', 'Based on the order in which you see the bees.'],
     required: true,
-    correct_response: 'Based on the four features of the bee.CORRECT',
+    correct_response: 'Based on the four features of the bee',
     name: 'Q2'
   },
   {
     prompt: 'What happens when you avoid a bee variety?',
-    options: ['CONT_You do not learn if it was friendly or dangerous, and do not alter your bonus.',
-              'FULL_You learn if it was friendly or dangerous, but do not alter your bonus.',
+    options: ['You do not learn if it was friendly or dangerous, and do not alter your bonus.',
+              'You learn if it was friendly or dangerous, but do not alter your bonus.',
               'You learn if it was friendly or dangerous and alter your bonus.'],
     required: true,
     correct_response: conditional_quiz(),

@@ -4,9 +4,15 @@ body {
   font-family: 'Open Sans', 'Arial', sans-serif;
 }
 
-em {
-  color: blue;
+
+.redText {
+  color:red;
 }
+
+.greenText {
+  color: green;
+}
+
 #header {
   height:  80px;
   background-color: #DEE3E3;

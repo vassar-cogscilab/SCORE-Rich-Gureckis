@@ -14,7 +14,7 @@ var payout_feedback = {
   stimulus: () => {
     return `You started with $2.50 of base pay.<br><br>
             You made `+money_stringify.format(bonus_pay)+` in bonus pay,
-            for a grand total of <b>`+money_stringify.format(bonus_pay + 2.5)+`</b>.`},
+            for a total of <b>`+money_stringify.format(bonus_pay + 2.5)+`</b>.`},
   choices: ['Continue.'],
   margin_vertical: '16px'
 }
