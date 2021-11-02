@@ -61,7 +61,7 @@ var instructions = {
 
       conditional_instructions(),
 
-      `<strong>You begin with a bonus of $0.40</strong>.<br>There will be
+      `<strong>You begin with a bonus of $0.54</strong>.<br>There will be
       no changes in which bee varieties are friendly and which are
       dangerous over the course of the experiment.`,
 
