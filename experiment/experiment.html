@@ -118,6 +118,11 @@
         timeline.push({
           type: 'call-function',
           func: function(){
+            // log bonus pay into data
+            jsPsych.data.addProperties({
+              bonus: bonus_pay
+            });
+
             var data = jsPsych.data.get().json();
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'php/save_json.php');
