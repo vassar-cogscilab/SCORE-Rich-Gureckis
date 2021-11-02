@@ -142,8 +142,16 @@
         timeline.push({
           type: 'html-keyboard-response',
           stimulus: function(){
+            var bad_features = [];
+            if(bee_info.antennae !== 'X'){ bad_features.push(bee_info.antennae == 'A' ? 'antennae' : 'no antennae')}
+            if(bee_info.wings !== 'X'){ bad_features.push(bee_info.wings == '1' ? 'single wings' : 'double wings')}
+            if(bee_info.legs !== 'X') { bad_features.push(bee_info.legs == 'F' ? 'two legs' : 'six legs')}
+            if(bee_info.pattern !== 'X') { bad_features.push(bee_info.pattern == 'S' ? 'stripes' : 'dots')}
+
             return `<p>Thanks for participating in our experiment!</p>
-              <p>In case you are curious, the bees that were dangerous were bees with </p>
+              <p>In case you are curious, the bees that were dangerous were bees with ${bad_features[0]} and ${bad_features[1]}. The bees had to have both of these features together to be dangerous.</p>
+              <p>The dangerous bees change for each participant in our study, but please do not share information about this study with other Prolific users until the study is complete.</p>
+              <p>Your bonus payment will be made within the next few days as we process the data from the study. Thanks again!</p>
               <p><a href="https://app.prolific.co/submissions/complete?cc=4BA6C8EA">Click here to complete the experiment and return to Prolific.</a></p>
             `
           },
