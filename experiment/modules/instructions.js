@@ -160,7 +160,7 @@ var post_instructions_quiz_first = {
     }
     data.correct = correct;
     first_checkpoint = data.correct
-    console.log(data.correct);
+    //console.log(data.correct);
   }
 }
 
@@ -178,7 +178,7 @@ var post_instructions_quiz = {
     var Q3_correct = data.response.Q3 == instructions_quiz_questions[2].correct_response;
     data.correct = Q1_correct && Q2_correct && Q3_correct;
     second_checkpoint = data.correct;
-    console.log(data.correct);
+    //console.log(data.correct);
   }
 } 
 
@@ -186,10 +186,10 @@ var post_instructions_quiz = {
 var instructions_quiz_feedback = {
   type: 'html-button-response',
   stimulus: () => {
-    console.log('first check'+first_checkpoint);
-    console.log('second check'+second_checkpoint);
+    //console.log('first check'+first_checkpoint);
+    //console.log('second check'+second_checkpoint);
     var quiz_passed = first_checkpoint && second_checkpoint;
-    console.log('passed?'+quiz_passed);
+    //console.log('passed?'+quiz_passed);
     if(quiz_passed) {
       return `<p>Congrats, you got everything right<br>When you're ready, click the button below to continue to the experiment.</p>`
     } else if (instructions_quiz_attempt_count < 2) {
