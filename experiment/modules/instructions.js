@@ -8,6 +8,9 @@
 
 
 var instructions_quiz_attempt_count = 0;
+var first_checkpoint = false;
+var second_checkpoint = false; 
+
 
 function conditional_instructions() {
   var response = '';
@@ -32,9 +35,25 @@ function conditional_diagram() {
   return response;
 }
 
+function conditional_quiz() {
+  var question3 = '';
+  if (condition_assignment  == 'contingent') {
+    question3 += 'You do not learn if it was friendly or dangerous, and do not alter your bonus.'; // contingent assignment
+  } else {
+    question3 += 'You learn if it was friendly or dangerous, but do not alter your bonus.'; // full-info assignment
+  }
+  return question3;
+}
+
+var instructions, instructions_quiz_first, instructions_quiz_questions, post_instructions_quiz_first, post_instructions_quiz,
+instructions_quiz_feedback, instruction_repeat, instructions_sequence;
 
 // INSTRUCTIONS
-var instructions = {
+
+function createInstructionsTrials(){
+
+
+instructions = {
   type: 'instructions',
     pages: [
       `In this experiment, you will play a simple video game in which you take on the role of a beekeeper collecting honey.`,
@@ -92,7 +111,7 @@ var instructions = {
 }
 
 
-var instructions_quiz_first = [
+instructions_quiz_first = [
   {
     prompt: 'Which of the following are features of the bee varieties?',
     options: ['Two or six legs', 'Square or round body', 'Single or compound eyes',
@@ -104,7 +123,7 @@ var instructions_quiz_first = [
   },
 ]
 
-var instructions_quiz_questions = [
+instructions_quiz_questions = [
   {
     prompt: 'Can a bee variety change from being friendly to dangerous or dangerous to friendly over time?',
     options: ['No.', 'Yes.'],
@@ -130,19 +149,10 @@ var instructions_quiz_questions = [
   }
 ]
 
-function conditional_quiz() {
-var question3 = '';
-if (condition_assignment  == 'contingent') {
-  question3 += 'You do not learn if it was friendly or dangerous, and do not alter your bonus.'; // contingent assignment
-} else {
-  question3 += 'You learn if it was friendly or dangerous, but do not alter your bonus.'; // full-info assignment
-}
-return question3;
-}
 
-var first_checkpoint = false;
 
-var post_instructions_quiz_first = {
+
+post_instructions_quiz_first = {
   type: 'survey-multi-select',
   questions: instructions_quiz_first,
   on_finish: (data) => {
@@ -164,9 +174,8 @@ var post_instructions_quiz_first = {
   }
 }
 
-var second_checkpoint = false; 
 
-var post_instructions_quiz = {
+post_instructions_quiz = {
   type: 'survey-multi-choice',
   questions: instructions_quiz_questions,
   on_start: () => {
@@ -183,7 +192,7 @@ var post_instructions_quiz = {
 } 
 
 
-var instructions_quiz_feedback = {
+instructions_quiz_feedback = {
   type: 'html-button-response',
   stimulus: () => {
     //console.log('first check'+first_checkpoint);
@@ -211,7 +220,7 @@ var instructions_quiz_feedback = {
 }
 
 
-var instruction_repeat = {
+instruction_repeat = {
   timeline: [
     instructions,
     post_instructions_quiz_first,
@@ -226,6 +235,8 @@ var instruction_repeat = {
   }
 }
 
-var instructions_sequence = {
+instructions_sequence = {
   timeline: [instructions, post_instructions_quiz_first, post_instructions_quiz, instructions_quiz_feedback, instruction_repeat]
+}
+
 }
