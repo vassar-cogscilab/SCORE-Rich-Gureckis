@@ -10,10 +10,11 @@ library(jsonlite)
 library(ggplot2)
 library(tidyr)
 library(stringr)
+library(readr)
 ```
 
 ```{r Load the Data, include=FALSE}
-data.files <- list.files('data/fake', full.names = TRUE, pattern=".json")
+data.files <- list.files('data/prolific', full.names = TRUE, pattern=".json")
 data.tables <- lapply(data.files, function(file){
   data.table <- fromJSON(file)
   rand_id <- str_split(file, "-|\\.")[[1]][2]
@@ -26,7 +27,8 @@ all.data <- bind_rows(data.tables)
 # Participants
 
 ```{r Filter subjects who indicate using external materials to help remember, include=FALSE}
-good.subjects <- all.data %>% filter(trial_type == 'survey-multi-choice', is.na(correct)) %>%
+good.subjects <- all.data %>% 
+  filter(trial_type == 'survey-multi-choice', is.na(correct)) %>%
   select(subject, condition, response) %>%
   unnest(response) %>%
   filter(response == "No")
@@ -78,6 +80,10 @@ data <- all.data %>%
       dim2 == "pattern" ~ response == (pattern == stimulus_pattern),
       dim2 == "legs" ~ response == (legs == stimulus_legs))
   )
+```
+
+```{r Write CSV of raw data, include=FALSE}
+write_csv(data, file='data/prolific/analysis-data.csv')
 ```
 
 ```{r Categorize as 1D or 2D strategy, include=FALSE, message=FALSE}
@@ -141,27 +147,27 @@ h0.test <- t.test(acc_1d ~ condition, data=test.summary, var.equal = T)
 h0.test.print <- papaja::apa_print(h0.test)
 ```
 
+```{r Calculate effect size, include=FALSE}
+cohens.d <- (group.test.summary$M[1] - group.test.summary$M[2]) / sqrt(sum(group.test.summary$SD^2)/2)
+```
 The critical hypothesis for the SCORE replication is
 
 > H*: Participants in the contingent feedback condition will adopt an inferior one-dimension categorization strategy more often than participants in the full-information condition. 
 >
 > Expected pattern of results: Participants in the contingent feedback condition will have a higher average 1D score compared to participants in the full-information condition.
 
-We tested this hypothesis with an independent samples t-test. 1D accuracy scores in the contingent information condition (M=`r contingent.group$M`, SD=`r contingent.group$SD`) were [higher/lower/not significantly different from] scores in the full-information condition (M=`r full.info.group$M`, SD=`r full.info.group$SD`), `r h0.test.print$full_result`.
+We tested this hypothesis with an independent samples t-test. 1D accuracy scores in the contingent information condition (M=`r contingent.group$M`, SD=`r contingent.group$SD`) were [higher/lower/not significantly different from] scores in the full-information condition (M=`r full.info.group$M`, SD=`r full.info.group$SD`), `r h0.test.print$full_result`. The effect size is *d* = `r cohens.d`.
 
 ```{r Plot results, fig.cap = "Histogram of 1D accuracy scores for each condition.", echo=FALSE}
 ggplot(test.summary, aes(x=acc_1d))+
-  geom_histogram(data=test.summary %>% filter(condition=='full-information'), aes(y = -..count..), fill="#69b3a2", binwidth=1/32)+
-  annotate("label", x=0.5, y=-2, label="Full Information", fill="#69b3a2", color="#ffffff", fontface="bold",label.padding=unit(.5, "lines"), label.r=unit(0.25, "lines"))+
-  geom_histogram(data=test.summary %>% filter(condition=='contingent'), aes(y = ..count..), fill="#404080", binwidth=1/32)+
-  annotate("label", x=0.5, y=2, label="Contingent Information", fill="#404080", color="#ffffff", fontface="bold", label.padding=unit(.5, "lines"), label.r=unit(0.25, "lines"))+
-  scale_y_continuous(name="Count\n", breaks=seq(-2,2,2), labels=c(2,0,2))+
+  geom_histogram(data=test.summary %>% filter(condition=='full-information'), aes(y = -..count..), fill="#69b3a2", binwidth=1/16)+
+  annotate("label", x=0.5, y=-40, label="Full Information", fill="#69b3a2", color="#ffffff", fontface="bold",label.padding=unit(.5, "lines"), label.r=unit(0.25, "lines"))+
+  geom_histogram(data=test.summary %>% filter(condition=='contingent'), aes(y = ..count..), fill="#404080", binwidth=1/16)+
+  annotate("label", x=0.5, y=40, label="Contingent Information", fill="#404080", color="#ffffff", fontface="bold", label.padding=unit(.5, "lines"), label.r=unit(0.25, "lines"))+
+  scale_y_continuous(name="Count\n", breaks=seq(-80,80,10), labels=abs(seq(-80,80,10)))+
   #scale_x_continuous(limits=c(0,1.0))+
   labs(x="\n1D Accuracy at Test")+
   theme_minimal()+
   theme(panel.grid.minor = element_blank())
   
 ```
-
-
-
